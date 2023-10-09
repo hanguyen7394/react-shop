@@ -3,7 +3,7 @@ import React from 'react';
 const MyAccount = () => {
   return (
     <div className="tab-pane fade show active" id="tab-account" role="tabpanel" aria-labelledby="tab-account-link">
-      <form action="#" className="account-form">
+      <form className="account-form">
         <div className="row">
           <div className="col-sm-6">
             <label>Full Name *</label>

@@ -99,7 +99,6 @@ const AuthContextProvider = ({ children }) => {
       },
       onFail: () => {
         message.error('Registered failed');
-        console.error(error);
       },
       onFinally: () => {
         callback?.();
@@ -119,6 +118,8 @@ const AuthContextProvider = ({ children }) => {
         handleLogout,
         handleLogin,
         handleRegister,
+        loadingLogin,
+        loadingRegister
       }}
     >
       {children}

@@ -19537,3 +19537,12 @@ a:focus {
         font-size: 2.8rem;
     }
 }
+
+.is-loading {
+    height:0;
+    overflow:hidden
+}
+
+.is-loaded {
+    height:auto
+}

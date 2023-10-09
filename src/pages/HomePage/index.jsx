@@ -1,42 +1,47 @@
-import HomeTopProduct from "./HomeTopProduct";
-import HomeIntro from "./HomeIntro";
-import HomeDealOutlet from "./HomeDealOutlet";
-import HomeBrand from "./HomeBrand";
-import HomeCategoryProduct from "./HomeCategoryProduct";
-import HomeSocial from "./HomeSocial";
-import HomeIconBox from "./HomeIconBox";
+import { Suspense, lazy } from 'react';
+import ComponentLoading from '../../components/ComponentLoading';
+
+const HomeTopProduct = lazy(() => import('./HomeTopProduct'));
+const HomeIntro = lazy(() => import('./HomeIntro'));
+const HomeDealOutlet = lazy(() => import('./HomeDealOutlet'));
+const HomeBrand = lazy(() => import('./HomeBrand'));
+const HomeCategoryProduct = lazy(() => import('./HomeCategoryProduct'));
+const HomeSocial = lazy(() => import('./HomeSocial'));
+const HomeIconBox = lazy(() => import('./HomeIconBox'));
 
 const HomePage = () => {
   return (
-    <main className="main">
-      <HomeIntro />
+    <Suspense fallback={<ComponentLoading />}>
+      <main className="main">
+        <HomeIntro />
 
-      <HomeTopProduct />
+        <HomeTopProduct />
 
-      <div className="mb-7 mb-lg-11" />
+        <div className="mb-7 mb-lg-11" />
 
-      <HomeDealOutlet />
+        <HomeDealOutlet />
 
-      <HomeBrand />
+        <HomeBrand />
 
-      <div className="container">
-        <hr className="mt-3 mb-6" />
-      </div>
+        <div className="container">
+          <hr className="mt-3 mb-6" />
+        </div>
 
-      <div className="container">
-        <hr className="mt-5 mb-6" />
-      </div>
+        <div className="container">
+          <hr className="mt-5 mb-6" />
+        </div>
 
-      <HomeCategoryProduct />
+        <HomeCategoryProduct />
 
-      <div className="container">
-        <hr className="mt-5 mb-0" />
-      </div>
+        <div className="container">
+          <hr className="mt-5 mb-0" />
+        </div>
 
-      <HomeIconBox />
+        <HomeIconBox />
 
-      <HomeSocial />
-    </main>
+        <HomeSocial />
+      </main>
+    </Suspense>
   );
 };
 

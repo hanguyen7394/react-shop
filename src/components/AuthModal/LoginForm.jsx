@@ -4,9 +4,12 @@ import { useForm } from 'react-hook-form';
 import { MESSAGE } from '../../constant/message';
 import { REGREX } from '../../constant/regrex';
 import { useAuthContext } from '../../context/AuthContext';
+import ComponentLoading from '../ComponentLoading';
+import useDebounce from '../../hooks/useDebounce';
 
 const LoginForm = () => {
-  const { handleCloseModal, handleLogin } = useAuthContext();
+  const { handleCloseModal, handleLogin, loadingLogin } = useAuthContext();
+  const loadingDebounce = useDebounce(loadingLogin, 300);
 
   const {
     register,
@@ -22,7 +25,8 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="tab-pane fade show active">
+    <div className="tab-pane fade show active" style={{ position: 'relative' }}>
+      {loadingDebounce && <ComponentLoading />}
       <form onSubmit={handleSubmit(_onSubmit)}>
         <FormField
           {...register('email', {
@@ -45,12 +49,10 @@ const LoginForm = () => {
           label="Password"
           required
         />
-        <div className="form-footer">
-          <button type="submit" className="btn btn-outline-primary-2">
-            <span>LOG IN</span>
-            <i className="icon-long-arrow-right" />
-          </button>
-        </div>
+        <button type="submit" className="btn btn-outline-primary-2">
+          <span>LOG IN</span>
+          <i className="icon-long-arrow-right" />
+        </button>
       </form>
     </div>
   );

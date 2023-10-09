@@ -6,9 +6,12 @@ import FormField from '../FormField';
 import { REGREX } from '../../constant/regrex';
 import { MESSAGE } from '../../constant/message';
 import { useAuthContext } from '../../context/AuthContext';
+import useDebounce from '../../hooks/useDebounce';
+import ComponentLoading from '../ComponentLoading';
 
 const RegisterForm = () => {
-  const { handleRegister } = useAuthContext();
+  const { handleCloseModal, handleRegister, loadingRegister } = useAuthContext();
+  const loadingDebounce = useDebounce(loadingRegister, 300);
 
   const {
     register,
@@ -24,7 +27,8 @@ const RegisterForm = () => {
   };
 
   return (
-    <div className="tab-pane fade show active" id="register" role="tabpanel" aria-labelledby="register-tab">
+    <div className="tab-pane fade show active" id="register" style={{ position: 'relative' }}>
+      {loadingDebounce && <ComponentLoading />}
       <form onSubmit={handleSubmit(_onSubmit)}>
         <FormField
           {...register('email', {
