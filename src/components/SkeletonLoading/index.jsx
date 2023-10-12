@@ -4,17 +4,29 @@ import styled from 'styled-components';
 
 const Wrapper = styled.div`
   width: 100%;
-  columns: ${(props) => props.$columns};
+  columns: ${(props) => props.$columnsXS};
   gap: 15px;
+
+  @media screen and (min-width: 480px) {
+    columns: ${(props) => props.$columnsXS};
+  }
+
+  @media screen and (min-width: 992px) {
+    columns: ${(props) => props.$columnsSM};
+  }
+
+  @media screen and (min-width: 1200px) {
+    columns: ${(props) => props.$columns};
+  }
 `;
 
 const Item = styled.div`
   min-height: ${(props) => props.$height};
 `;
 
-const SkeletonLoading = ({ className = '', theme = 'light', height = '30vh', rows = 8, style, columns = 1 }) => {
+const SkeletonLoading = ({ className = '', theme = 'light', height = '30vh', rows = 8, style, columns = 1, columnsSM = 1, columnsXS = 1 }) => {
   return (
-    <Wrapper $columns={columns} style={style}>
+    <Wrapper $columns={columns} $columnsSM={columnsSM} $columnsXS={columnsXS} style={style}>
       <ConfigProvider
         theme={{
           token: {

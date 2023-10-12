@@ -1,7 +1,7 @@
 import React, { Suspense, lazy, useEffect, useState } from 'react';
 const Pagination = lazy(() => import('../../components/Pagination'));
 const ProductFilter = lazy(() => import('./ProductFilter'));
-const ProductItem = lazy(() => import('./ProductItem'));
+const ProductItem = lazy(() => import('../../components/ProductItem'));
 import useMutation from '../../hooks/useMutation';
 import productService from '../../services/productService';
 import ComponentLoading from '../../components/ComponentLoading';
@@ -97,7 +97,9 @@ const ProductPage = () => {
                       })}
                     >
                       {products?.map((product) => (
-                        <ProductItem key={product.id} {...product} />
+                        <div className="col-6 col-md-4 col-lg-4">
+                          <ProductItem key={product.id} {...product} />
+                        </div>
                       ))}
                     </div>
                   )}
