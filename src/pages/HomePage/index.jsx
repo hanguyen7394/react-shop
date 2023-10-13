@@ -8,23 +8,31 @@ const HomeDealOutlet = lazy(() => import('./HomeDealOutlet'));
 const HomeBrand = lazy(() => import('./HomeBrand'));
 const HomeCategoryProduct = lazy(() => import('./HomeCategoryProduct'));
 const HomeSocial = lazy(() => import('./HomeSocial'));
-const HomeIconBox = lazy(() => import('./HomeIconBox'));
+const HomeServices = lazy(() => import('./HomeServices'));
 
 const HomePage = () => {
-  const { hotProductProps, categoryProductProps, introProductProps } = useHomePage();
+  const {
+    hotProductProps,
+    categoryProductProps,
+    introProductProps,
+    brandProps,
+    dealOutletProps,
+    serviceProps,
+    getDealProps,
+  } = useHomePage();
 
   return (
     <Suspense fallback={<ComponentLoading />}>
       <main className="main">
-        <HomeIntro {...introProductProps}/>
+        <HomeIntro {...introProductProps} />
 
         <HomeHotProduct {...hotProductProps} />
 
         <div className="mb-7 mb-lg-11" />
 
-        <HomeDealOutlet />
+        <HomeDealOutlet {...dealOutletProps} />
 
-        <HomeBrand />
+        <HomeBrand {...brandProps} />
 
         <div className="container">
           <hr className="mt-3 mb-6" />
@@ -40,9 +48,9 @@ const HomePage = () => {
           <hr className="mt-5 mb-0" />
         </div>
 
-        <HomeIconBox />
+        <HomeServices {...serviceProps} />
 
-        <HomeSocial />
+        <HomeSocial {...getDealProps} />
       </main>
     </Suspense>
   );

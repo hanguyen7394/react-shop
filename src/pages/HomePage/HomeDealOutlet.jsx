@@ -1,6 +1,17 @@
 import React from 'react';
+import ProductItem from '../../components/ProductItem';
+import moment from 'moment';
+import { formatCurrency } from '../../utils/format';
+import { getSalePrice } from '../../utils/common';
+import { PATHS } from '../../constant/paths';
+import { Link } from 'react-router-dom';
+import CountDown from './CountDown';
 
-const HomeDealOutlet = () => {
+const HomeDealOutlet = ({ dealProducts }) => {
+  const targetTime = moment().add(1, 'day').set({ hour: 17, minute: 0, second: 0, millisecond: 0 });
+  const dealCountDown = dealProducts?.[0] || {};
+  const image = dealCountDown?.images?.[0];
+  const detailPath = `${PATHS.PRODUCT.INDEX}/${dealCountDown?.slug}`;
   return (
     <div className="bg-light deal-container pt-7 pb-7 mb-5">
       <div className="container">
@@ -10,119 +21,55 @@ const HomeDealOutlet = () => {
         </div>
         <div className="row">
           <div className="col-lg-6 deal-col">
-            <div className="deal" style={{ backgroundImage: 'url("/assets/images/demos/demo-3/deal/bg-1.jpg")' }}>
+            <div
+              className="deal"
+              style={{ backgroundImage: `url("${image}")`, backgroundSize: '50%', backgroundPosition: 'right center' }}
+            >
               <div className="deal-top">
                 <h2>Deal of the Day.</h2>
                 <h4>Limited quantities. </h4>
               </div>
               <div className="deal-content">
                 <h3 className="product-title">
-                  <a href="product-detail.html">Home Smart Speaker with Google Assistant</a>
+                  <Link to={detailPath}>{dealCountDown?.name}</Link>
                 </h3>
                 <div className="product-price">
-                  <span className="new-price">$129.00</span>
-                  <span className="old-price">Was $150.99</span>
+                  <span className="new-price">{getSalePrice(dealCountDown?.price, dealCountDown?.discount)}</span>
+                  <span className="old-price">Was {formatCurrency.format(dealCountDown?.price)}</span>
                 </div>
-                <a href="product-detail.html" className="btn btn-link">
+                <Link to={detailPath} className="btn btn-link">
                   <span>Shop Now</span>
                   <i className="icon-long-arrow-right" />
-                </a>
+                </Link>
               </div>
               <div className="deal-bottom">
-                <div className="deal-countdown" data-until="+10h" />
+                <CountDown targetTime={targetTime} />
               </div>
             </div>
           </div>
           <div className="col-lg-6">
             <div className="products">
-              <div className="row">
-                <div className="col-6">
-                  <div className="product product-2">
-                    <figure className="product-media">
-                      <span className="product-label label-circle label-sale">Sale</span>
-                      <a href="product-detail.html">
-                        <img
-                          src="/assets/images/demos/demo-3/products/product-5.jpg"
-                          alt="Product image"
-                          className="product-image"
-                        />
-                      </a>
-                      <div className="product-action-vertical">
-                        <a href="#" className="btn-product-icon btn-wishlist btn-expandable">
-                          <span>add to wishlist</span>
-                        </a>
-                      </div>
-                      <div className="product-action product-action-dark">
-                        <a href="#" className="btn-product btn-cart" title="Add to cart">
-                          <span>add to cart</span>
-                        </a>
-                      </div>
-                    </figure>
-                    <div className="product-body">
-                      <h3 className="product-title">
-                        <a href="product-detail.html">Canon - EOS 5D Mark IV DSLR Camera</a>
-                      </h3>
-                      <div className="product-price">
-                        <span className="new-price">$3,599.99</span>
-                        <span className="old-price">Was $3,999.99</span>
-                      </div>
-                      <div className="ratings-container">
-                        <div className="ratings">
-                          <div className="ratings-val" style={{ width: '80%' }} />
+              {!!dealProducts?.length && (
+                <div className="row">
+                  {dealProducts?.map((product, index) => {
+                    return (
+                      index > 0 && (
+                        <div key={product?.id} className="col-6">
+                          <ProductItem {...product} />
                         </div>
-                        <span className="ratings-text">( 5 Reviews )</span>
-                      </div>
-                    </div>
-                  </div>
+                      )
+                    );
+                  })}
                 </div>
-                <div className="col-6">
-                  <div className="product product-2">
-                    <figure className="product-media">
-                      <span className="product-label label-circle label-sale">Sale</span>
-                      <a href="product-detail.html">
-                        <img
-                          src="/assets/images/demos/demo-3/products/product-6.jpg"
-                          alt="Product image"
-                          className="product-image"
-                        />
-                      </a>
-                      <div className="product-action-vertical">
-                        <a href="#" className="btn-product-icon btn-wishlist btn-expandable">
-                          <span>add to wishlist</span>
-                        </a>
-                      </div>
-                      <div className="product-action product-action-dark">
-                        <a href="#" className="btn-product btn-cart" title="Add to cart">
-                          <span>add to cart</span>
-                        </a>
-                      </div>
-                    </figure>
-                    <div className="product-body">
-                      <h3 className="product-title">
-                        <a href="product-detail.html">Apple - Smart Keyboard Folio for 11-inch iPad Pro</a>
-                      </h3>
-                      <div className="product-price">
-                        <span className="new-price">$179.00</span>
-                        <span className="old-price">Was $200.99</span>
-                      </div>
-                      <div className="ratings-container">
-                        <div className="ratings">
-                          <div className="ratings-val" style={{ width: '60%' }} />
-                        </div>
-                        <span className="ratings-text">( 4 Reviews )</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              )}
             </div>
           </div>
         </div>
         <div className="more-container text-center mt-3 mb-0">
-          <a href="#" className="btn btn-outline-dark-2 btn-round btn-more">
+          <Link to={PATHS.PRODUCT.INDEX} className="btn btn-outline-dark-2 btn-round btn-more">
             <span>Shop more</span>
             <i className="icon-long-arrow-right" />
-          </a>
+          </Link>
         </div>
       </div>
     </div>

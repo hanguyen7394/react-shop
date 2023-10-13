@@ -2,13 +2,15 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { PATHS } from '../../constant/paths';
 import { formatCurrency } from '../../utils/format';
+import { getSalePrice } from '../../utils/common';
 
-const ProductItem = ({ name, images, price, slug, rating }) => {
+const ProductItem = ({ name, images, price, slug, rating, discount }) => {
   const detailPath = `${PATHS.PRODUCT.INDEX}/${slug}`;
   const rateWidth = `${(100 / 5) * rating}%`;
   return (
     <div className="product product-2">
       <figure className="product-media">
+        {discount > 0 && <span className="product-label label-circle label-sale">Sale</span>}
         <Link to={detailPath}>
           <img
             src={images?.[0] || '/assets/images/demos/demo-3/products/product-11.jpg'}
@@ -31,7 +33,10 @@ const ProductItem = ({ name, images, price, slug, rating }) => {
         <h3 className="product-title">
           <Link to={detailPath}>{name}</Link>
         </h3>
-        <div className="product-price"> {formatCurrency.format(price)} </div>
+        <div className="product-price">
+          <span className="new-price">{getSalePrice(price, discount)}</span>
+          <span className="old-price">Was {formatCurrency.format(price)}</span>
+        </div>
         <div className="ratings-container">
           <div className="ratings">
             <div className="ratings-val" style={{ width: rateWidth }} />

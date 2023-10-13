@@ -97,7 +97,7 @@ const ProductPage = () => {
                       })}
                     >
                       {products?.map((product) => (
-                        <div className="col-6 col-md-4 col-lg-4">
+                        <div key={product?.id} className="col-6 col-md-4 col-lg-4">
                           <ProductItem key={product.id} {...product} />
                         </div>
                       ))}

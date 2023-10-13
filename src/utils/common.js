@@ -1,3 +1,5 @@
+import { formatCurrency } from "./format";
+
 export const owlCarousels = ($wrap, options) => {
   if ($.fn.owlCarousel) {
     var owlSettings = {
@@ -28,3 +30,7 @@ export const owlCarousels = ($wrap, options) => {
     });
   }
 };
+
+export const getSalePrice = (price, discount) => {
+  return formatCurrency.format(price - discount);
+}
