@@ -1,4 +1,4 @@
-import { formatCurrency } from "./format";
+import { formatCurrency } from './format';
 
 export const owlCarousels = ($wrap, options) => {
   if ($.fn.owlCarousel) {
@@ -33,4 +33,13 @@ export const owlCarousels = ($wrap, options) => {
 
 export const getSalePrice = (price, discount) => {
   return formatCurrency.format(price - discount);
-}
+};
+
+export const scrollToTop = () => {
+  $('html, body').animate(
+    {
+      scrollTop: 0,
+    },
+    800
+  );
+};

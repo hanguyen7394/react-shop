@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { MESSAGE } from "../../constant/message";
 import { REGREX } from "../../constant/regrex";
 
-const GetDealSection = ({ handleSubscribeDeal }) => {
+const HomeSocial = ({ handleSubscribeDeal }) => {
   const {
     reset,
     register,
@@ -102,4 +102,4 @@ const GetDealSection = ({ handleSubscribeDeal }) => {
   );
 };
 
-export default GetDealSection;
+export default HomeSocial;

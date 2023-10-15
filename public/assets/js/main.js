@@ -574,24 +574,24 @@ $(document).ready(function () {
         e.preventDefault();
     });
 
-    // Scroll Top Button - Show
-    var $scrollTop = $('#scroll-top');
+    // // Scroll Top Button - Show
+    // var $scrollTop = $('#scroll-top');
 
-    $(window).on('load scroll', function () {
-        if ($(window).scrollTop() >= 400) {
-            $scrollTop.addClass('show');
-        } else {
-            $scrollTop.removeClass('show');
-        }
-    });
+    // $(window).on('load scroll', function () {
+    //     if ($(window).scrollTop() >= 400) {
+    //         $scrollTop.addClass('show');
+    //     } else {
+    //         $scrollTop.removeClass('show');
+    //     }
+    // });
 
-    // On click animate to top
-    $scrollTop.on('click', function (e) {
-        $('html, body').animate({
-            'scrollTop': 0
-        }, 800);
-        e.preventDefault();
-    });
+    // // On click animate to top
+    // $scrollTop.on('click', function (e) {
+    //     $('html, body').animate({
+    //         'scrollTop': 0
+    //     }, 800);
+    //     e.preventDefault();
+    // });
 
     var $viewAll = $('.view-all-demos');
     $viewAll.on('click', function (e) {

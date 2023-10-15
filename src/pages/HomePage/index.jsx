@@ -1,14 +1,11 @@
-import { Suspense, lazy } from 'react';
-import ComponentLoading from '../../components/ComponentLoading';
+import HomeBrand from './HomeBrand';
+import HomeCategoryProduct from './HomeCategoryProduct';
+import HomeDealOutlet from './HomeDealOutlet';
+import HomeHotProduct from './HomeHotProduct';
+import HomeIntro from './HomeIntro';
+import HomeServices from './HomeServices';
+import HomeSocial from './HomeSocial';
 import useHomePage from './useHomePage';
-
-const HomeHotProduct = lazy(() => import('./HomeHotProduct'));
-const HomeIntro = lazy(() => import('./HomeIntro'));
-const HomeDealOutlet = lazy(() => import('./HomeDealOutlet'));
-const HomeBrand = lazy(() => import('./HomeBrand'));
-const HomeCategoryProduct = lazy(() => import('./HomeCategoryProduct'));
-const HomeSocial = lazy(() => import('./HomeSocial'));
-const HomeServices = lazy(() => import('./HomeServices'));
 
 const HomePage = () => {
   const {
@@ -22,37 +19,35 @@ const HomePage = () => {
   } = useHomePage();
 
   return (
-    <Suspense fallback={<ComponentLoading />}>
-      <main className="main">
-        <HomeIntro {...introProductProps} />
+    <main className="main">
+      <HomeIntro {...introProductProps} />
 
-        <HomeHotProduct {...hotProductProps} />
+      <HomeHotProduct {...hotProductProps} />
 
-        <div className="mb-7 mb-lg-11" />
+      <div className="mb-7 mb-lg-11" />
 
-        <HomeDealOutlet {...dealOutletProps} />
+      <HomeDealOutlet {...dealOutletProps} />
 
-        <HomeBrand {...brandProps} />
+      <HomeBrand {...brandProps} />
 
-        <div className="container">
-          <hr className="mt-3 mb-6" />
-        </div>
+      <div className="container">
+        <hr className="mt-3 mb-6" />
+      </div>
 
-        <div className="container">
-          <hr className="mt-5 mb-6" />
-        </div>
+      <div className="container">
+        <hr className="mt-5 mb-6" />
+      </div>
 
-        <HomeCategoryProduct {...categoryProductProps} />
+      <HomeCategoryProduct {...categoryProductProps} />
 
-        <div className="container">
-          <hr className="mt-5 mb-0" />
-        </div>
+      <div className="container">
+        <hr className="mt-5 mb-0" />
+      </div>
 
-        <HomeServices {...serviceProps} />
+      <HomeServices {...serviceProps} />
 
-        <HomeSocial {...getDealProps} />
-      </main>
-    </Suspense>
+      <HomeSocial {...getDealProps} />
+    </main>
   );
 };
 
