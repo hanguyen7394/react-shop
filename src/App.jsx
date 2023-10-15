@@ -22,8 +22,13 @@ import MyOrder from './pages/DashboardPage/MyOrder';
 import MyAddress from './pages/DashboardPage/MyAddress';
 import MyWishlist from './pages/DashboardPage/MyWishlist';
 import PrivateRoute from './components/PrivateRoute';
+import { message } from 'antd';
 
 function App() {
+  message.config({
+    top: 80,
+  });
+
   return (
     <BrowserRouter>
       <Routes>

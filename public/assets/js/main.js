@@ -2,7 +2,7 @@
 $(document).ready(function () {
     'use strict';
 
-    owlCarousels();
+    // owlCarousels();
     quantityInputs();
 
     // Header Search Toggle
@@ -31,30 +31,30 @@ $(document).ready(function () {
     });
 
     // Sticky header
-    var catDropdown = $('.category-dropdown'),
-        catInitVal = catDropdown.data('visible');
+    // var catDropdown = $('.category-dropdown'),
+    //     catInitVal = catDropdown.data('visible');
 
-    if ($('.sticky-header').length && $(window).width() >= 992) {
-        var sticky = new Waypoint.Sticky({
-            element: $('.sticky-header')[0],
-            stuckClass: 'fixed',
-            offset: -300,
-            handler: function (direction) {
-                // Show category dropdown
-                if (catInitVal && direction == 'up') {
-                    catDropdown.addClass('show').find('.dropdown-menu').addClass('show');
-                    catDropdown.find('.dropdown-toggle').attr('aria-expanded', 'true');
-                    return false;
-                }
+    // if ($('.sticky-header').length && $(window).width() >= 992) {
+    //     var sticky = new Waypoint.Sticky({
+    //         element: $('.sticky-header')[0],
+    //         stuckClass: 'fixed',
+    //         offset: -300,
+    //         handler: function (direction) {
+    //             // Show category dropdown
+    //             if (catInitVal && direction == 'up') {
+    //                 catDropdown.addClass('show').find('.dropdown-menu').addClass('show');
+    //                 catDropdown.find('.dropdown-toggle').attr('aria-expanded', 'true');
+    //                 return false;
+    //             }
 
-                // Hide category dropdown on fixed header
-                if (catDropdown.hasClass('show')) {
-                    catDropdown.removeClass('show').find('.dropdown-menu').removeClass('show');
-                    catDropdown.find('.dropdown-toggle').attr('aria-expanded', 'false');
-                }
-            }
-        });
-    }
+    //             // Hide category dropdown on fixed header
+    //             if (catDropdown.hasClass('show')) {
+    //                 catDropdown.removeClass('show').find('.dropdown-menu').removeClass('show');
+    //                 catDropdown.find('.dropdown-toggle').attr('aria-expanded', 'false');
+    //             }
+    //         }
+    //     });
+    // }
 
     // Menu init with superfish plugin
     if ($.fn.superfish) {
@@ -254,37 +254,37 @@ $(document).ready(function () {
         });
     }
 
-    function owlCarousels($wrap, options) {
-        if ($.fn.owlCarousel) {
-            var owlSettings = {
-                items: 1,
-                loop: true,
-                margin: 0,
-                responsiveClass: true,
-                nav: true,
-                navText: ['<i class="icon-angle-left">', '<i class="icon-angle-right">'],
-                dots: true,
-                smartSpeed: 400,
-                autoplay: false,
-                autoplayTimeout: 15000
-            };
-            if (typeof $wrap == 'undefined') {
-                $wrap = $('body');
-            }
-            if (options) {
-                owlSettings = $.extend({}, owlSettings, options);
-            }
+    // function owlCarousels($wrap, options) {
+    //     if ($.fn.owlCarousel) {
+    //         var owlSettings = {
+    //             items: 1,
+    //             loop: true,
+    //             margin: 0,
+    //             responsiveClass: true,
+    //             nav: true,
+    //             navText: ['<i class="icon-angle-left">', '<i class="icon-angle-right">'],
+    //             dots: true,
+    //             smartSpeed: 400,
+    //             autoplay: false,
+    //             autoplayTimeout: 15000
+    //         };
+    //         if (typeof $wrap == 'undefined') {
+    //             $wrap = $('body');
+    //         }
+    //         if (options) {
+    //             owlSettings = $.extend({}, owlSettings, options);
+    //         }
 
-            // Init all carousel
-            $wrap.find('[data-toggle="owl"]').each(function () {
-                var $this = $(this),
-                    newOwlSettings = $.extend({}, owlSettings, $this.data('owl-options'));
+    //         // Init all carousel
+    //         $wrap.find('[data-toggle="owl"]').each(function () {
+    //             var $this = $(this),
+    //                 newOwlSettings = $.extend({}, owlSettings, $this.data('owl-options'));
 
-                $this.owlCarousel(newOwlSettings);
+    //             $this.owlCarousel(newOwlSettings);
 
-            });
-        }
-    }
+    //         });
+    //     }
+    // }
 
     // Product Image Zoom plugin - product pages
     if ($.fn.elevateZoom) {
@@ -640,14 +640,14 @@ $(document).ready(function () {
                 },
                 callbacks: {
                     ajaxContentAdded: function () {
-                        owlCarousels($('.quickView-content'), {
-                            onTranslate: function (e) {
-                                var $this = $(e.target),
-                                    currentIndex = ($this.data('owl.carousel').current() + e.item.count - Math.ceil(e.item.count / 2)) % e.item.count;
-                                $('.quickView-content .carousel-dot').eq(currentIndex).addClass('active').siblings().removeClass('active');
-                                $('.curidx').html(currentIndex + 1);
-                            }
-                        });
+                        // owlCarousels($('.quickView-content'), {
+                        //     onTranslate: function (e) {
+                        //         var $this = $(e.target),
+                        //             currentIndex = ($this.data('owl.carousel').current() + e.item.count - Math.ceil(e.item.count / 2)) % e.item.count;
+                        //         $('.quickView-content .carousel-dot').eq(currentIndex).addClass('active').siblings().removeClass('active');
+                        //         $('.curidx').html(currentIndex + 1);
+                        //     }
+                        // });
                         quantityInputs();
                     },
                     open: function () {

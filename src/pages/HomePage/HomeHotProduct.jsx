@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { PATHS } from '../../constant/paths';
-import { formatCurrency } from '../../utils/format';
 import { Link } from 'react-router-dom';
 import { owlCarousels } from '../../utils/common';
 import classNames from 'classnames';
@@ -21,7 +19,7 @@ const HomeHotProduct = ({ productFeatured, productOnSale, productTopRated }) => 
     owlCarousels();
   }, [selectedTab, productFeatured, productOnSale, productTopRated]);
 
-  const handleChangeTab = (e, tabName) => {
+  const _onChangeTab = (e, tabName) => {
     e.preventDefault();
     e.stopPropagation();
 
@@ -60,7 +58,7 @@ const HomeHotProduct = ({ productFeatured, productOnSale, productTopRated }) => 
             className={classNames('nav-link', {
               active: selectedTab === TABS.featured,
             })}
-            onClick={(e) => handleChangeTab(e, TABS.featured)}
+            onClick={(e) => _onChangeTab(e, TABS.featured)}
           >
             {TABS.featured}
           </Link>
@@ -70,7 +68,7 @@ const HomeHotProduct = ({ productFeatured, productOnSale, productTopRated }) => 
             className={classNames('nav-link', {
               active: selectedTab === TABS.on_sale,
             })}
-            onClick={(e) => handleChangeTab(e, TABS.on_sale)}
+            onClick={(e) => _onChangeTab(e, TABS.on_sale)}
           >
             {TABS.on_sale}
           </Link>
@@ -80,14 +78,14 @@ const HomeHotProduct = ({ productFeatured, productOnSale, productTopRated }) => 
             className={classNames('nav-link', {
               active: selectedTab === TABS.top_rated,
             })}
-            onClick={(e) => handleChangeTab(e, TABS.top_rated)}
+            onClick={(e) => _onChangeTab(e, TABS.top_rated)}
           >
             {TABS.top_rated}
           </Link>
         </li>
       </ul>
       <div className="tab-content tab-content-carousel">
-        <div className="tab-pane p-0 fade show active">
+        <div className="tab-pane p-0 fade show active" style={{minHeight: '545px'}}>
           {loading && <SkeletonLoading columns={4} columnsSM={3} columnsXS={2} height="auto" />}
           {!!renderProducts?.length && (
             <div className={`${loading ? 'is-loading' : 'is-loaded'}`}>
