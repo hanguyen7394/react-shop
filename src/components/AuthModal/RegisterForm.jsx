@@ -5,25 +5,29 @@ import { PATHS } from '../../constant/paths';
 import FormField from '../FormField';
 import { REGREX } from '../../constant/regrex';
 import { MESSAGE } from '../../constant/message';
-import { useAuthContext } from '../../context/AuthContext';
 import useDebounce from '../../hooks/useDebounce';
 import ComponentLoading from '../ComponentLoading';
+import { useDispatch, useSelector } from 'react-redux';
+import { handleRegister } from '../../reducers/authReducer';
 
 const RegisterForm = () => {
-  const { handleCloseModal, handleRegister, loadingRegister } = useAuthContext();
-  const loadingDebounce = useDebounce(loadingRegister, 300);
+  const dispatch = useDispatch();
+  const { loading } = useSelector((state) => state.auth);
+  const loadingDebounce = useDebounce(loading?.register, 300);
 
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm();
 
   const _onSubmit = (data) => {
-    handleRegister(data, () => {
-      handleCloseModal();
-    });
+    const payload = {
+      ...data,
+      firstName: '',
+      lastName: '',
+    }
+    dispatch(handleRegister(payload));
   };
 
   return (

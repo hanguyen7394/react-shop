@@ -19546,3 +19546,7 @@ a:focus {
 .is-loaded {
     height:auto
 }
+
+.ant-message {
+    z-index: 1051;
+}

@@ -54,7 +54,7 @@ const HomeCategoryProduct = ({ categories, handleChangeCatSlug, productCategory,
         </div>
       </div>
       <div className="tab-content tab-content-carousel just-action-icons-sm">
-        <div className="tab-pane p-0 fade show active">
+        <div className="tab-pane p-0 fade show active" style={{minHeight: '474px'}}>
           {loading && <SkeletonLoading columns={4} columnsSM={3} columnsXS={2} height="auto" />}
           {!!productCategory?.length && (
             <div className={`${loading ? 'is-loading' : 'is-loaded'}`}>

@@ -23,11 +23,24 @@ import MyAddress from './pages/DashboardPage/MyAddress';
 import MyWishlist from './pages/DashboardPage/MyWishlist';
 import PrivateRoute from './components/PrivateRoute';
 import { message } from 'antd';
+import { useEffect } from 'react';
+import tokenMethod from './utils/token';
+import { useDispatch } from 'react-redux';
+import { handleGetProfile } from './reducers/authReducer';
 
 function App() {
+  const dispatch = useDispatch();
+
   message.config({
     top: 80,
+    duration: 2,
   });
+
+  useEffect(() => {
+    if (!!tokenMethod.get()) {
+      dispatch(handleGetProfile());
+    }
+  }, []);
 
   return (
     <BrowserRouter>

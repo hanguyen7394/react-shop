@@ -6,13 +6,11 @@ const ScrollTopButton = lazy(() => import('../components/SrollTopButton'));
 const HeaderMobile = lazy(() => import('../components/HeaderMobile'));
 const AuthModal = lazy(() => import('../components/AuthModal'));
 import MainContextProvider from '../context/MainContext';
-import AuthContextProvider from '../context/AuthContext';
 import ComponentLoading from '../components/ComponentLoading';
 
 const MainLayout = () => {
   return (
     <MainContextProvider>
-      <AuthContextProvider>
         <Suspense fallback={<ComponentLoading style={{height: '100vh'}}/>}>
           <div className="page-wrapper">
             <Header />
@@ -25,7 +23,6 @@ const MainLayout = () => {
             <AuthModal />
           </div>
         </Suspense>
-      </AuthContextProvider>
     </MainContextProvider>
   );
 };

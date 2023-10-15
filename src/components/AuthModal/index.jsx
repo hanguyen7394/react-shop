@@ -1,14 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { useAuthContext } from '../../context/AuthContext';
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
 import { MODAL_TYPES } from '../../constant/common';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
+import { useDispatch, useSelector } from 'react-redux';
+import { handleCloseModal, handleShowModal } from '../../reducers/authReducer';
 
 const AuthModal = () => {
-  const { showedModal, handleCloseModal, handleShowModal } = useAuthContext();
+  const dispatch = useDispatch();
+  const { showedModal } = useSelector((state) => state.auth);
+
+  const _onCloseModal = () => {
+    dispatch(handleCloseModal());
+  }
+
+  const _onShowModal = (type) => {
+    dispatch(handleShowModal(type));
+  }
+
   return ReactDOM.createPortal(
     <>
       <div
@@ -20,7 +31,7 @@ const AuthModal = () => {
         role="dialog"
         aria-hidden="true"
         style={{ display: !!showedModal ? 'block' : 'none' }}
-        onClick={handleCloseModal}
+        onClick={_onCloseModal}
       >
         <div className="modal-dialog modal-dialog-centered" role="document">
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
@@ -28,7 +39,7 @@ const AuthModal = () => {
               <button
                 type="button"
                 className="close"
-                onClick={handleCloseModal}
+                onClick={_onCloseModal}
                 data-dismiss="modal"
                 aria-label="Close"
               >
@@ -44,7 +55,7 @@ const AuthModal = () => {
                         className={classNames('nav-link', {
                           active: showedModal === MODAL_TYPES.LOGIN
                         })}
-                        onClick={() => handleShowModal(MODAL_TYPES.LOGIN)}
+                        onClick={() => _onShowModal(MODAL_TYPES.LOGIN)}
                       >
                         Sign In
                       </Link>
@@ -54,7 +65,7 @@ const AuthModal = () => {
                         className={classNames('nav-link', {
                           active: showedModal === MODAL_TYPES.REGISTER
                         })}
-                        onClick={() => handleShowModal(MODAL_TYPES.REGISTER)}
+                        onClick={() => _onShowModal(MODAL_TYPES.REGISTER)}
                       >
                         Register
                       </Link>

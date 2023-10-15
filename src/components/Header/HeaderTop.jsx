@@ -1,24 +1,34 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useAuthContext } from '../../context/AuthContext';
 import { MODAL_TYPES } from '../../constant/common';
 import { PATHS } from '../../constant/paths';
+import { useDispatch, useSelector } from 'react-redux';
+import { handleLogout, handleShowModal } from '../../reducers/authReducer';
 
 const HeaderTop = () => {
-  const { profile, handleShowModal, handleLogout } = useAuthContext();
+  const dispatch = useDispatch();
+  const { profile } = useSelector((state) => state.auth);
   const [showedDropdown, setShowedDropdown] = useState(false);
 
   const { firstName, lastName } = profile || {};
-  const fullName = firstName || lastName ? `${firstName} ${lastName}` : 'Full Name';
+  const fullName = firstName || lastName ? `${firstName} ${lastName}` : 'Guest';
 
-  const _showDropdown = (e) => {
+  const _onShowDropdown = (e) => {
     e?.stopPropagation();
     setShowedDropdown(true);
   };
 
-  const _hideDropdown = () => {
+  const _onHideDropdown = () => {
     setShowedDropdown(false);
   };
+
+  const _onShowModal = (type) => {
+    dispatch(handleShowModal(type));
+  }
+
+  const _onLogout = () => {
+    dispatch(handleLogout());
+  }
 
   return (
     <div className="header-top">
@@ -29,16 +39,16 @@ const HeaderTop = () => {
           </a>
         </div>
         <div className="header-right">
-          {!profile.id ? (
+          {!profile?.id ? (
             <ul className="top-menu top-link-menu">
               <li>
-                <Link onClick={() => handleShowModal(MODAL_TYPES.LOGIN)} className="top-menu-login">
+                <Link onClick={() => _onShowModal(MODAL_TYPES.LOGIN)} className="top-menu-login">
                   <i className="icon-user"></i>Login | Resgister{' '}
                 </Link>
               </li>
             </ul>
           ) : (
-            <ul className="top-menu" onMouseEnter={_showDropdown} onMouseLeave={_hideDropdown}>
+            <ul className="top-menu" onMouseEnter={_onShowDropdown} onMouseLeave={_onHideDropdown}>
               <li>
                 <Link className="top-link-menu">
                   <i className="icon-user" />
@@ -46,7 +56,7 @@ const HeaderTop = () => {
                 </Link>
                 <ul style={{ visibility: showedDropdown ? 'visible' : 'hidden', opacity: showedDropdown ? 1 : 0 }}>
                   <li>
-                    <ul onClick={_hideDropdown}>
+                    <ul onClick={_onHideDropdown}>
                       <li>
                         <Link to={PATHS.DASHBOARD.INDEX}>Account Details</Link>
                       </li>
@@ -59,7 +69,7 @@ const HeaderTop = () => {
                         </Link>
                       </li>
                       <li>
-                        <Link onClick={handleLogout}>Sign Out</Link>
+                        <Link onClick={_onLogout}>Sign Out</Link>
                       </li>
                     </ul>
                   </li>

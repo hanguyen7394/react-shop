@@ -3,25 +3,24 @@ import FormField from '../FormField';
 import { useForm } from 'react-hook-form';
 import { MESSAGE } from '../../constant/message';
 import { REGREX } from '../../constant/regrex';
-import { useAuthContext } from '../../context/AuthContext';
 import ComponentLoading from '../ComponentLoading';
 import useDebounce from '../../hooks/useDebounce';
+import { useDispatch, useSelector } from 'react-redux';
+import { handleLogin } from '../../reducers/authReducer';
 
 const LoginForm = () => {
-  const { handleCloseModal, handleLogin, loadingLogin } = useAuthContext();
-  const loadingDebounce = useDebounce(loadingLogin, 300);
+  const dispatch = useDispatch();
+  const { loading } = useSelector((state) => state.auth);
+  const loadingDebounce = useDebounce(loading?.login, 300);
 
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm();
 
   const _onSubmit = (data) => {
-    handleLogin(data, () => {
-      handleCloseModal();
-    });
+    dispatch(handleLogin(data));
   };
 
   return (
