@@ -1,19 +1,29 @@
 import React from 'react';
-import { useMainContext } from '../../context/MainContext';
 import { Menu } from '../Styled-Components/styled-components';
 import { NavLink } from 'react-router-dom';
 import { PATHS } from '../../constant/paths';
 import classNames from 'classnames';
+import { useDispatch, useSelector } from 'react-redux';
+import { handleChangeTab, handleToggleNavbar } from '../../reducers/mainReducer';
 
 const HeaderMobile = () => {
-  const { isShowNavbar, selectedTab, handleToggleNavbar, handleChangeTab } = useMainContext();
+  const dispatch = useDispatch();
+  const { selectedTab } = useSelector((state) => state.main);
+
+  const _onToggleNavbar = (payload) => {
+    dispatch(handleToggleNavbar(payload));
+  }
+
+  const _onChangeTab = (payload) => {
+    dispatch(handleChangeTab(payload));
+  }
 
   return (
     <>
-      <div className="mobile-menu-overlay" onClick={() => handleToggleNavbar(false)} />
+      <div className="mobile-menu-overlay" onClick={() => _onToggleNavbar(false)} />
       <div className="mobile-menu-container">
         <div className="mobile-menu-wrapper">
-          <span className="mobile-menu-close" onClick={() => handleToggleNavbar(false)}>
+          <span className="mobile-menu-close" onClick={() => _onToggleNavbar(false)}>
             <i className="icon-close" />
           </span>
           <form action="#" method="get" className="mobile-search">
@@ -38,7 +48,7 @@ const HeaderMobile = () => {
                 className={classNames('nav-link', {
                   active: selectedTab === 'main',
                 })}
-                onClick={() => handleChangeTab('main')}
+                onClick={() => _onChangeTab('main')}
               >
                 Menu
               </a>
@@ -48,7 +58,7 @@ const HeaderMobile = () => {
                 className={classNames('nav-link', {
                   active: selectedTab === 'category',
                 })}
-                onClick={() => handleChangeTab('category')}
+                onClick={() => _onChangeTab('category')}
               >
                 Categories
               </a>

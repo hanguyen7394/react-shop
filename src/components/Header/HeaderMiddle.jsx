@@ -1,43 +1,18 @@
-import React, { useEffect } from 'react';
-import { useMainContext } from '../../context/MainContext';
+import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { Menu } from '../Styled-Components/styled-components';
 import { PATHS } from '../../constant/paths';
 import classNames from 'classnames';
+import { useDispatch, useSelector } from 'react-redux';
+import { handleToggleNavbar } from '../../reducers/mainReducer';
 
 const HeaderMiddle = () => {
-  const { isShowNavbar, handleToggleNavbar } = useMainContext();
+  const dispatch = useDispatch();
+  const { isShowNavbar } = useSelector((state) => state.main);
 
   const _toggleNavbar = () => {
-    handleToggleNavbar();
+    dispatch(handleToggleNavbar());
   };
-
-  useEffect(() => {
-    var catDropdown = $('.category-dropdown'),
-      catInitVal = catDropdown.data('visible');
-
-    if ($('.sticky-header').length && $(window).width() >= 992) {
-      var sticky = new Waypoint.Sticky({
-        element: $('.sticky-header')[0],
-        stuckClass: 'fixed',
-        offset: -300,
-        handler: function (direction) {
-          // Show category dropdown
-          if (catInitVal && direction == 'up') {
-            catDropdown.addClass('show').find('.dropdown-menu').addClass('show');
-            catDropdown.find('.dropdown-toggle').attr('aria-expanded', 'true');
-            return false;
-          }
-
-          // Hide category dropdown on fixed header
-          if (catDropdown.hasClass('show')) {
-            catDropdown.removeClass('show').find('.dropdown-menu').removeClass('show');
-            catDropdown.find('.dropdown-toggle').attr('aria-expanded', 'false');
-          }
-        },
-      });
-    }
-  }, []);
 
   return (
     <div className="header-middle sticky-header">

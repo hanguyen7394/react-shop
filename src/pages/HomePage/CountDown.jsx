@@ -18,6 +18,7 @@ const CountDown = ({ targetTime }) => {
 
     return { hours, minutes, seconds };
   };
+
   useEffect(() => {
     const intervalId = setInterval(() => {
       const remaining = calculateTimeRemaining(targetTime);
@@ -26,6 +27,7 @@ const CountDown = ({ targetTime }) => {
 
     return () => clearInterval(intervalId);
   }, [targetTime]);
+
   return (
     <div className="deal-countdown is-countdown" data-until="+10h">
       <span className="countdown-row countdown-show3">

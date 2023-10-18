@@ -1,5 +1,5 @@
 import { Suspense, lazy, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { message } from 'antd';
 import { PATHS } from './constant/paths';
@@ -31,11 +31,20 @@ const PrivateRoute = lazy(() => import('./components/PrivateRoute'));
 
 function App() {
   const dispatch = useDispatch();
+  const { isShowNavbar } = useSelector((state) => state.main);
 
   message.config({
     top: 80,
     duration: 2,
   });
+
+  useEffect(() => {
+    if (isShowNavbar) {
+      $('body').addClass('mmenu-active');
+    } else {
+      $('body').removeClass('mmenu-active');
+    }
+  }, [isShowNavbar]);
 
   useEffect(() => {
     if (!!tokenMethod.get()) {
