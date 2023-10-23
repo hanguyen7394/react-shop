@@ -7,14 +7,13 @@ const ProductFilter = ({
   handleChangePriceRange,
   selectedCategories,
   handleChangeCategory,
-  search
 }) => {
   let rangeTimeout = useRef();
   useEffect(() => {
-    if (typeof noUiSlider === 'object') {
-      var priceSlider = document.getElementById('price-slider');
-      if (priceSlider == null) return;
+    var priceSlider = document.getElementById('price-slider');
+    if (priceSlider == null) return;
 
+    if (typeof noUiSlider === 'object') {
       noUiSlider.create(priceSlider, {
         start: currentPriceRange,
         connect: true,
@@ -31,20 +30,23 @@ const ProductFilter = ({
         }),
       });
 
-      // Update Price Range
       priceSlider.noUiSlider.on('update', function (values) {
         $('#filter-price-range').text(values.join(' - '));
+      });
+
+      priceSlider.noUiSlider.on('change', function (values) {
         const range = values.map((item) => item.substring(1));
         if (rangeTimeout) {
           clearTimeout(rangeTimeout);
         }
         rangeTimeout = setTimeout(() => {
-          console.log('search :>> ', search);
-          if (!!search) {
-            handleChangePriceRange(range);
-          }
+          handleChangePriceRange(range);
         }, 500);
       });
+    }
+
+    return () => {
+      priceSlider.noUiSlider.destroy();
     }
   }, []);
 

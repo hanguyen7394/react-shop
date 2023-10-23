@@ -11,7 +11,7 @@ const PRODUCT_LIMIT = 6;
 
 const useProductPage = () => {
   const { search } = useLocation();
-  const queryObj = queryString.parse(search);
+  let queryObj = queryString.parse(search);
   let [_, setSearchParams] = useSearchParams();
   const selectedCategories = Array.isArray(queryObj?.category) ? queryObj?.category : [queryObj?.category] || [];
   const currentPriceRange = [queryObj?.minPrice || 0, queryObj?.maxPrice || 1000];
@@ -28,11 +28,11 @@ const useProductPage = () => {
   const categories = categoryData?.products || [];
 
   useEffect(() => {
-    const newQueryString = queryString.stringify({
-      limit: PRODUCT_LIMIT,
-      page: 1,
-    });
-    getProductList(`?${newQueryString}`);
+    console.log('run')
+    if (!Object.keys(queryObj).length) {
+      queryObj = { limit: PRODUCT_LIMIT, page: 1, abc: 123 };
+      getProductList(`?${queryString.stringify(queryObj)}`);
+    }
   }, []);
 
   useEffect(() => {
@@ -79,6 +79,7 @@ const useProductPage = () => {
   };
 
   const handleChangePriceRange = (range) => {
+    console.log('queryObj :>> ', queryObj);
     updateQueryString({
       ...queryObj,
       stopSrolling: true,
@@ -89,6 +90,7 @@ const useProductPage = () => {
   };
 
   const handleChangeCategory = (category) => {
+    console.log('queryObj :>> ', queryObj);
     updateQueryString({ ...queryObj, category, page: 1, stopSrolling: true });
   };
 
@@ -110,7 +112,6 @@ const useProductPage = () => {
     handleChangePriceRange,
     selectedCategories,
     handleChangeCategory,
-    search
   };
 
   const paginationProps = {
