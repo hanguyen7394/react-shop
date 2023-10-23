@@ -12,11 +12,9 @@ const PRODUCT_LIMIT = 6;
 const useProductPage = () => {
   const { search } = useLocation();
   const queryObj = queryString.parse(search);
-  let [searchParams, setSearchParams] = useSearchParams();
-  const [selectedCategories, setSelectedCategories] = useState(Array.isArray(queryObj?.category) ? queryObj?.category : [queryObj?.category] || []);
-  const minPrice = queryObj?.minPrice || 0;
-  const maxPrice = queryObj?.maxPrice || 1000;
-  const [priceRange, setPriceRange] = useState([minPrice, maxPrice]);
+  let [_, setSearchParams] = useSearchParams();
+  const selectedCategories = Array.isArray(queryObj?.category) ? queryObj?.category : [queryObj?.category] || [];
+  const currentPriceRange = [queryObj?.minPrice || 0, queryObj?.maxPrice || 1000];
 
   const {
     data: productData,
@@ -30,19 +28,18 @@ const useProductPage = () => {
   const categories = categoryData?.products || [];
 
   useEffect(() => {
-    getProductList(`?${searchParams}`);
-  }, [searchParams]);
+    const newQueryString = queryString.stringify({
+      limit: PRODUCT_LIMIT,
+      page: 1,
+    });
+    getProductList(`?${newQueryString}`);
+  }, []);
 
   useEffect(() => {
-    updateQueryString({
-      ...queryObj,
-      stopSrolling: true,
-      minPrice: priceRange[0],
-      maxPrice: priceRange[1],
-      category: selectedCategories,
-      page: 1
-    });
-  }, [selectedCategories, priceRange]);
+    if (!!search) {
+      getProductList(search);
+    }
+  }, [search]);
 
   const updateQueryString = (queryObj) => {
     const newQueryString = queryString.stringify({
@@ -53,23 +50,24 @@ const useProductPage = () => {
     setSearchParams(new URLSearchParams(newQueryString));
   };
 
-  const onPageChange = (e, pageNumber) => {
+  const handleChangePage = (e, pageNumber) => {
     e.preventDefault();
     updateQueryString({
       ...queryObj,
       page: pageNumber,
+      stopSrolling: false,
     });
   };
 
   const getActiveSort = () => {
     return (
       Object.values(SORT_OPTIONS).find((option) => {
-        option.queryObj.order === queryObj.order && option.queryObj.orderBy === queryObj.orderBy;
+        return option.queryObj.order === queryObj.order && option.queryObj.orderBy === queryObj.orderBy;
       })?.value || SORT_OPTIONS.popularity.value
     );
   };
 
-  const onChangeSort = (sortType) => {
+  const handleChangeSort = (sortType) => {
     const sortQueryObj = SORT_OPTIONS[sortType].queryObj;
     if (sortQueryObj) {
       updateQueryString({
@@ -80,9 +78,23 @@ const useProductPage = () => {
     }
   };
 
+  const handleChangePriceRange = (range) => {
+    updateQueryString({
+      ...queryObj,
+      stopSrolling: true,
+      minPrice: range[0],
+      maxPrice: range[1],
+      page: 1,
+    });
+  };
+
+  const handleChangeCategory = (category) => {
+    updateQueryString({ ...queryObj, category, page: 1, stopSrolling: true });
+  };
+
   const productToolboxProps = {
     getActiveSort,
-    onChangeSort,
+    handleChangeSort,
     products,
     pagination,
   };
@@ -94,15 +106,16 @@ const useProductPage = () => {
 
   const productFilterProps = {
     categories,
+    currentPriceRange,
+    handleChangePriceRange,
     selectedCategories,
-    setSelectedCategories,
-    priceRange,
-    setPriceRange,
+    handleChangeCategory,
+    search
   };
 
   const paginationProps = {
     ...pagination,
-    onPageChange,
+    handleChangePage,
   };
 
   return {

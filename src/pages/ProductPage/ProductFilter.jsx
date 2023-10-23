@@ -1,7 +1,14 @@
 import React, { useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
-const ProductFilter = ({ categories, selectedCategories, setSelectedCategories, priceRange, setPriceRange }) => {
+const ProductFilter = ({
+  categories,
+  currentPriceRange,
+  handleChangePriceRange,
+  selectedCategories,
+  handleChangeCategory,
+  search
+}) => {
   let rangeTimeout = useRef();
   useEffect(() => {
     if (typeof noUiSlider === 'object') {
@@ -9,7 +16,7 @@ const ProductFilter = ({ categories, selectedCategories, setSelectedCategories, 
       if (priceSlider == null) return;
 
       noUiSlider.create(priceSlider, {
-        start: priceRange,
+        start: currentPriceRange,
         connect: true,
         step: 50,
         margin: 200,
@@ -32,7 +39,10 @@ const ProductFilter = ({ categories, selectedCategories, setSelectedCategories, 
           clearTimeout(rangeTimeout);
         }
         rangeTimeout = setTimeout(() => {
-          setPriceRange(range);
+          console.log('search :>> ', search);
+          if (!!search) {
+            handleChangePriceRange(range);
+          }
         }, 500);
       });
     }
@@ -40,16 +50,16 @@ const ProductFilter = ({ categories, selectedCategories, setSelectedCategories, 
 
   const _onChangeCategory = (e, idCategory) => {
     if (e.currentTarget.checked) {
-      setSelectedCategories([...selectedCategories, idCategory]);
+      handleChangeCategory([...selectedCategories, idCategory]);
     } else {
       const newCategories = selectedCategories?.filter((id) => id !== idCategory);
-      setSelectedCategories(newCategories);
+      handleChangeCategory(newCategories);
     }
   };
 
   const _onCleanAll = (e) => {
     e.preventDefault();
-    setSelectedCategories([]);
+    handleChangeCategory([]);
   };
 
   return (

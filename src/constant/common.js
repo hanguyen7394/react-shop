@@ -27,21 +27,21 @@ export const SORT_OPTIONS = {
   pricehight: {
     value: 'pricehight',
     label: 'Price Low to High',
-    queryObj: { orderBy: 'price', order: -1  },
+    queryObj: { orderBy: 'price', order: '-1'  },
   },
   pricelow: {
     value: 'pricelow',
     label: 'Price Hight to Low',
-    queryObj: { orderBy: 'price', order: 1  },
+    queryObj: { orderBy: 'price', order: '1'  },
   },
   newest: {
     value: 'newest',
     label: 'Newest',
-    queryObj: { orderBy: 'createdAt', order: -1  },
+    queryObj: { orderBy: 'createdAt', order: '-1'  },
   },
   rating: {
     value: 'rating',
     label: 'Most Rated',
-    queryObj: { orderBy: 'rating', order: -1  },
+    queryObj: { orderBy: 'rating', order: '-1'  },
   },
 };

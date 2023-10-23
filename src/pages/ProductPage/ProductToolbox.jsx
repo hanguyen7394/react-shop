@@ -2,11 +2,11 @@ import React from 'react';
 import { SORT_OPTIONS } from '../../constant/common';
 import SelectCustom from '../../components/SelectCustom';
 
-const ProductToolbox = ({ getActiveSort, onChangeSort, products, pagination }) => {
+const ProductToolbox = ({ getActiveSort, handleChangeSort, products, pagination }) => {
   const activeSort = getActiveSort();
   const _onChangeSort = (e) => {
     const value = e.target.value;
-    onChangeSort(value);
+    handleChangeSort(value);
   };
 
   return (

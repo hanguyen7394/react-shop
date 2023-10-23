@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const PAGE_STEP = 1;
 
-const Pagination = ({ page = 1, limit = 6, total = 1, onPageChange }) => {
+const Pagination = ({ page = 1, limit = 6, total = 1, handleChangePage }) => {
   const totalPage = Math.ceil(Number(total) / Number(limit)) || 1;
   const currentPage = Number(page);
 
@@ -43,14 +43,14 @@ const Pagination = ({ page = 1, limit = 6, total = 1, onPageChange }) => {
   const _onClickPrev = (e) => {
     const prev = currentPage - 1;
     if (prev >= 1) {
-      onPageChange(e, prev);
+      handleChangePage(e, prev);
     }
   };
 
   const _onClickNext = (e) => {
     const next = currentPage + 1;
     if (next <= totalPage) {
-      onPageChange(e, next);
+      handleChangePage(e, next);
     }
   };
 
@@ -75,7 +75,7 @@ const Pagination = ({ page = 1, limit = 6, total = 1, onPageChange }) => {
                 })}
                 aria-current="page"
               >
-                <Link onClick={(e) => onPageChange(e, pageNumber)} className="page-link">
+                <Link onClick={(e) => handleChangePage(e, pageNumber)} className="page-link">
                   {pageNumber}
                 </Link>
               </li>
