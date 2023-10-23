@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Outlet, useLocation } from 'react-router-dom';
+import { Outlet, useLocation, useSearchParams } from 'react-router-dom';
 import { scrollToTop } from '../utils/common';
 import { handleToggleNavbar } from '../reducers/mainReducer';
 import { useDispatch } from 'react-redux';
@@ -12,8 +12,10 @@ import ScrollTopButton from '../components/SrollTopButton';
 const MainLayout = () => {
   const dispatch = useDispatch();
   const pathname = useLocation();
+  let [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
+    if (searchParams.get('stopSrolling') === 'true') return;
     scrollToTop();
     dispatch(handleToggleNavbar(false));
   }, [pathname]);

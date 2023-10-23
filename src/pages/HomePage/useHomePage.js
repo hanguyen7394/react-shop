@@ -8,7 +8,6 @@ import { message } from 'antd';
 import { MESSAGE } from '../../constant/message';
 
 const useHomePage = () => {
-  //API Handling
   const { data: productData } = useQuery(productService.getProducts);
   const { data: categoryData } = useQuery(productService.getCategories);
   const { data: homeData } = useQuery(() => pageService.getPageDataByName('home'));
