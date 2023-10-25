@@ -2,7 +2,7 @@ import axiosInstance from '../utils/axiosInstance';
 
 const reviewService = {
   getReviewsByProduct(productId, query = '') {
-    axiosInstance.get(`/reviews/product/${productId}${query}`);
+    return axiosInstance.get(`/reviews/product/${productId}${query}`);
   },
 };
 

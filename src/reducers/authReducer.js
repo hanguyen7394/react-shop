@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import tokenMethod from '../utils/token';
 import authService from '../services/authService';
 import { message } from 'antd';
+import { handleGetCart } from './cartReducer';
 
 const initialState = {
   showedModal: '',
@@ -75,6 +76,7 @@ export const handleLogin = createAsyncThunk('auth/handleLogin', async (payload, 
       refreshToken,
     });
     dispatch(handleGetProfile());
+    dispatch(handleGetCart());
     message.success('Signed in successfully');
     return true;
   } catch (error) {
@@ -82,7 +84,7 @@ export const handleLogin = createAsyncThunk('auth/handleLogin', async (payload, 
     if (errorInfo.error === 'Not Found') {
       message.error('Username or password is incorrect');
     }
-    return thunkApi.rejectWithValue(errorInfo);
+    return rejectWithValue(errorInfo);
   }
 });
 

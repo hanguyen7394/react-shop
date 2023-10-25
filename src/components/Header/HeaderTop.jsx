@@ -10,8 +10,8 @@ const HeaderTop = () => {
   const { profile } = useSelector((state) => state.auth);
   const [showedDropdown, setShowedDropdown] = useState(false);
 
-  const { firstName, lastName } = profile || {};
-  const fullName = firstName || lastName ? `${firstName} ${lastName}` : 'Guest';
+  const { firstName, lastName, email } = profile || {};
+  const fullName = firstName || lastName ? `${firstName} ${lastName}` : email;
 
   const _onShowDropdown = (e) => {
     e?.stopPropagation();

@@ -5,9 +5,13 @@ import { useEffect, useRef } from 'react';
 import useDebounce from '../../hooks/useDebounce';
 import { message } from 'antd';
 import reviewService from '../../services/reviewService';
-import useQuery from '../../hooks/useQuery';
+import { useDispatch } from 'react-redux';
+import { handleUpdateCart } from '../../reducers/cartReducer';
+// import useQuery from '../../hooks/useQuery';
 
 const useProductDetailPage = () => {
+  const dispatch = useDispatch();
+
   //Handle get detail data
   const { productSlug } = useParams();
 
@@ -24,12 +28,8 @@ const useProductDetailPage = () => {
   } = useMutation(reviewService.getReviewsByProduct);
 
   const detailDebounce = useDebounce(detailLoading, 300);
-  const detailInfo = detailData || {};
-  const reviews= reviewData || [];
 
-  const { id: productId, images, name: productName, description, shippingReturn } = detailInfo || {};
-  // const { data: reviewData } = useQuery(() => productId && reviewService.getReviewsByProduct(productId), [productId]);
-  // console.log('reviewData :>> ', reviewData);
+  const { id: productId, images, name: productName, description, shippingReturn, price, discount } = detailData || {};
 
   useEffect(() => {
     !!productSlug && getProductBySlug(productSlug);
@@ -50,15 +50,27 @@ const useProductDetailPage = () => {
     if (!color) {
       message.error('Please choose a color variant');
       return;
-    }
-
-    if (Number.isNaN(quantity) || quantity < 1) {
+    } else if (Number.isNaN(quantity) || quantity < 1) {
       message.error('Please input correct quantity');
       return;
     }
 
-    resetColor();
-    resetQuantity();
+    const payload = {
+      addedId: productId,
+      addedColor: color,
+      addedQuantity: quantity,
+      addedPrice: price - discount,
+    };
+
+    try {
+      const res = dispatch(handleUpdateCart(payload)).unwrap();
+      if (res) {
+        resetColor();
+        resetQuantity();
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   //Props list
@@ -67,7 +79,7 @@ const useProductDetailPage = () => {
   };
 
   const detailInfoProps = {
-    ...detailInfo,
+    ...detailData,
     colorRef,
     quantityRef,
     handleAddToCart,
@@ -76,7 +88,7 @@ const useProductDetailPage = () => {
   const detailTabProps = {
     description,
     shippingReturn,
-    reviews,
+    reviews: reviewData || [],
   };
 
   return {

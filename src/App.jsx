@@ -7,6 +7,7 @@ import tokenMethod from './utils/token';
 import { handleGetProfile } from './reducers/authReducer';
 import MainLayout from './layout/MainLayout';
 import ComponentLoading from './components/ComponentLoading';
+import { handleGetCart } from './reducers/cartReducer';
 const HomePage = lazy(() => import('./pages/HomePage'));
 const AboutPage = lazy(() => import('./pages/AboutPage'));
 const Page404 = lazy(() => import('./pages/Page404'));
@@ -49,6 +50,7 @@ function App() {
   useEffect(() => {
     if (!!tokenMethod.get()) {
       dispatch(handleGetProfile());
+      dispatch(handleGetCart());
     }
   }, []);
 
