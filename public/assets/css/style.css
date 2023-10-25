@@ -13834,6 +13834,11 @@ button:focus {
     background: none;
 }
 
+.btn.btn-spinner:disabled:hover {
+    cursor: not-allowed;
+    color: #1a1a1a;
+}
+
 .btn.btn-spinner i {
     margin: 0 !important;
 }

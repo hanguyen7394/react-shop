@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const ProductFilter = ({
   categories,
@@ -21,7 +21,7 @@ const ProductFilter = ({
         margin: 200,
         range: {
           min: 0,
-          max: 1000,
+          max: 1200,
         },
         tooltips: true,
         format: wNumb({
@@ -48,7 +48,7 @@ const ProductFilter = ({
     return () => {
       priceSlider.noUiSlider.destroy();
     }
-  }, []);
+  }, [handleChangePriceRange]);
 
   const _onChangeCategory = (e, idCategory) => {
     if (e.currentTarget.checked) {

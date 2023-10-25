@@ -43,3 +43,7 @@ export const scrollToTop = () => {
     800
   );
 };
+
+export const calcRateWidth = (rating) => {
+  return `${(100 / 5) * rating}%`;
+}

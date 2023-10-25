@@ -6,7 +6,10 @@ const productService = {
   },
   getCategories() {
     return axiosInstance.get('/product-categories');
-  }
+  },
+  getProductBySlug(slug = '') {
+    return axiosInstance.get(`/products/${slug}`);
+  },
 };
 
 export default productService;

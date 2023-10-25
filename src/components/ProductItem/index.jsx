@@ -2,11 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { PATHS } from '../../constant/paths';
 import { formatCurrency } from '../../utils/format';
-import { getSalePrice } from '../../utils/common';
+import { calcRateWidth, getSalePrice } from '../../utils/common';
 
 const ProductItem = ({ name, images, price, slug, rating, discount }) => {
   const detailPath = `${PATHS.PRODUCT.INDEX}/${slug}`;
-  const rateWidth = `${(100 / 5) * rating}%`;
+
   return (
     <div className="product product-2">
       <figure className="product-media">
@@ -35,11 +35,11 @@ const ProductItem = ({ name, images, price, slug, rating, discount }) => {
         </h3>
         <div className="product-price">
           <span className="new-price">{getSalePrice(price, discount)}</span>
-          <span className="old-price">Was {formatCurrency.format(price)}</span>
+          {discount > 0 && <span className="old-price">Was {formatCurrency.format(price)}</span>}
         </div>
         <div className="ratings-container">
           <div className="ratings">
-            <div className="ratings-val" style={{ width: rateWidth }} />
+            <div className="ratings-val" style={{ width: calcRateWidth(rating) }} />
           </div>
           <span className="ratings-text">( 4 Reviews )</span>
         </div>

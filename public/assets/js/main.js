@@ -3,7 +3,7 @@ $(document).ready(function () {
     'use strict';
 
     // owlCarousels();
-    quantityInputs();
+    // quantityInputs();
 
     // Header Search Toggle
 
@@ -191,59 +191,59 @@ $(document).ready(function () {
     //     });
     // }
 
-    // Product countdown
-    if ($.fn.countdown) {
-        $('.product-countdown').each(function () {
-            var $this = $(this),
-                untilDate = $this.data('until'),
-                compact = $this.data('compact'),
-                dateFormat = (!$this.data('format')) ? 'DHMS' : $this.data('format'),
-                newLabels = (!$this.data('labels-short')) ?
-                    ['Years', 'Months', 'Weeks', 'Days', 'Hours', 'Minutes', 'Seconds'] :
-                    ['Years', 'Months', 'Weeks', 'Days', 'Hours', 'Mins', 'Secs'],
-                newLabels1 = (!$this.data('labels-short')) ?
-                    ['Year', 'Month', 'Week', 'Day', 'Hour', 'Minute', 'Second'] :
-                    ['Year', 'Month', 'Week', 'Day', 'Hour', 'Min', 'Sec'];
+    // // Product countdown
+    // if ($.fn.countdown) {
+    //     $('.product-countdown').each(function () {
+    //         var $this = $(this),
+    //             untilDate = $this.data('until'),
+    //             compact = $this.data('compact'),
+    //             dateFormat = (!$this.data('format')) ? 'DHMS' : $this.data('format'),
+    //             newLabels = (!$this.data('labels-short')) ?
+    //                 ['Years', 'Months', 'Weeks', 'Days', 'Hours', 'Minutes', 'Seconds'] :
+    //                 ['Years', 'Months', 'Weeks', 'Days', 'Hours', 'Mins', 'Secs'],
+    //             newLabels1 = (!$this.data('labels-short')) ?
+    //                 ['Year', 'Month', 'Week', 'Day', 'Hour', 'Minute', 'Second'] :
+    //                 ['Year', 'Month', 'Week', 'Day', 'Hour', 'Min', 'Sec'];
 
-            var newDate;
+    //         var newDate;
 
-            // Split and created again for ie and edge
-            if (!$this.data('relative')) {
-                var untilDateArr = untilDate.split(", "), // data-until 2019, 10, 8 - yy,mm,dd
-                    newDate = new Date(untilDateArr[0], untilDateArr[1] - 1, untilDateArr[2]);
-            } else {
-                newDate = untilDate;
-            }
+    //         // Split and created again for ie and edge
+    //         if (!$this.data('relative')) {
+    //             var untilDateArr = untilDate.split(", "), // data-until 2019, 10, 8 - yy,mm,dd
+    //                 newDate = new Date(untilDateArr[0], untilDateArr[1] - 1, untilDateArr[2]);
+    //         } else {
+    //             newDate = untilDate;
+    //         }
 
-            $this.countdown({
-                until: newDate,
-                format: dateFormat,
-                padZeroes: true,
-                compact: compact,
-                compactLabels: ['y', 'm', 'w', ' days,'],
-                timeSeparator: ' : ',
-                labels: newLabels,
-                labels1: newLabels1
+    //         $this.countdown({
+    //             until: newDate,
+    //             format: dateFormat,
+    //             padZeroes: true,
+    //             compact: compact,
+    //             compactLabels: ['y', 'm', 'w', ' days,'],
+    //             timeSeparator: ' : ',
+    //             labels: newLabels,
+    //             labels1: newLabels1
 
-            });
-        });
+    //         });
+    //     });
 
-        // Pause
-        // $('.product-countdown').countdown('pause');
-    }
+    //     // Pause
+    //     // $('.product-countdown').countdown('pause');
+    // }
 
-    // Quantity Input - Cart page - Product Details pages
-    function quantityInputs() {
-        if ($.fn.inputSpinner) {
-            $("input[type='number']").inputSpinner({
-                decrementButton: '<i class="icon-minus"></i>',
-                incrementButton: '<i class="icon-plus"></i>',
-                groupClass: 'input-spinner',
-                buttonsClass: 'btn-spinner',
-                buttonsWidth: '26px'
-            });
-        }
-    }
+    // // Quantity Input - Cart page - Product Details pages
+    // function quantityInputs() {
+    //     if ($.fn.inputSpinner) {
+    //         $("input[type='number']").inputSpinner({
+    //             decrementButton: '<i class="icon-minus"></i>',
+    //             incrementButton: '<i class="icon-plus"></i>',
+    //             groupClass: 'input-spinner',
+    //             buttonsClass: 'btn-spinner',
+    //             buttonsWidth: '26px'
+    //         });
+    //     }
+    // }
 
     // Sticky Content - Sidebar - Social Icons etc..
     // Wrap elements with <div class="sticky-content"></div> if you want to make it sticky
@@ -286,140 +286,140 @@ $(document).ready(function () {
     //     }
     // }
 
-    // Product Image Zoom plugin - product pages
-    if ($.fn.elevateZoom) {
-        $('#product-zoom').elevateZoom({
-            gallery: 'product-zoom-gallery',
-            galleryActiveClass: 'active',
-            zoomType: "inner",
-            cursor: "crosshair",
-            zoomWindowFadeIn: 400,
-            zoomWindowFadeOut: 400,
-            responsive: true
-        });
+    // // Product Image Zoom plugin - product pages
+    // if ($.fn.elevateZoom) {
+    //     $('#product-zoom').elevateZoom({
+    //         gallery: 'product-zoom-gallery',
+    //         galleryActiveClass: 'active',
+    //         zoomType: "inner",
+    //         cursor: "crosshair",
+    //         zoomWindowFadeIn: 400,
+    //         zoomWindowFadeOut: 400,
+    //         responsive: true
+    //     });
 
-        // On click change thumbs active item
-        $('.product-gallery-item').on('click', function (e) {
-            $('#product-zoom-gallery').find('a').removeClass('active');
-            $(this).addClass('active');
+    //     // On click change thumbs active item
+    //     $('.product-gallery-item').on('click', function (e) {
+    //         $('#product-zoom-gallery').find('a').removeClass('active');
+    //         $(this).addClass('active');
 
-            e.preventDefault();
-        });
+    //         e.preventDefault();
+    //     });
 
-        var ez = $('#product-zoom').data('elevateZoom');
+    //     var ez = $('#product-zoom').data('elevateZoom');
 
-        // Open popup - product images
-        $('#btn-product-gallery').on('click', function (e) {
-            if ($.fn.magnificPopup) {
-                $.magnificPopup.open({
-                    items: ez.getGalleryList(),
-                    type: 'image',
-                    gallery: {
-                        enabled: true
-                    },
-                    fixedContentPos: false,
-                    removalDelay: 600,
-                    closeBtnInside: false
-                }, 0);
+    //     // Open popup - product images
+    //     $('#btn-product-gallery').on('click', function (e) {
+    //         if ($.fn.magnificPopup) {
+    //             $.magnificPopup.open({
+    //                 items: ez.getGalleryList(),
+    //                 type: 'image',
+    //                 gallery: {
+    //                     enabled: true
+    //                 },
+    //                 fixedContentPos: false,
+    //                 removalDelay: 600,
+    //                 closeBtnInside: false
+    //             }, 0);
 
-                e.preventDefault();
-            }
-        });
-    }
+    //             e.preventDefault();
+    //         }
+    //     });
+    // }
 
-    // Product Gallery - product-gallery.html
-    if ($.fn.owlCarousel && $.fn.elevateZoom) {
-        var owlProductGallery = $('.product-gallery-carousel');
+    // // Product Gallery - product-gallery.html
+    // if ($.fn.owlCarousel && $.fn.elevateZoom) {
+    //     var owlProductGallery = $('.product-gallery-carousel');
 
-        owlProductGallery.on('initialized.owl.carousel', function () {
-            owlProductGallery.find('.active img').elevateZoom({
-                zoomType: "inner",
-                cursor: "crosshair",
-                zoomWindowFadeIn: 400,
-                zoomWindowFadeOut: 400,
-                responsive: true
-            });
-        });
+    //     owlProductGallery.on('initialized.owl.carousel', function () {
+    //         owlProductGallery.find('.active img').elevateZoom({
+    //             zoomType: "inner",
+    //             cursor: "crosshair",
+    //             zoomWindowFadeIn: 400,
+    //             zoomWindowFadeOut: 400,
+    //             responsive: true
+    //         });
+    //     });
 
-        owlProductGallery.owlCarousel({
-            loop: false,
-            margin: 0,
-            responsiveClass: true,
-            nav: true,
-            navText: ['<i class="icon-angle-left">', '<i class="icon-angle-right">'],
-            dots: false,
-            smartSpeed: 400,
-            autoplay: false,
-            autoplayTimeout: 15000,
-            responsive: {
-                0: {
-                    items: 1
-                },
-                560: {
-                    items: 2
-                },
-                992: {
-                    items: 3
-                },
-                1200: {
-                    items: 3
-                }
-            }
-        });
+    //     owlProductGallery.owlCarousel({
+    //         loop: false,
+    //         margin: 0,
+    //         responsiveClass: true,
+    //         nav: true,
+    //         navText: ['<i class="icon-angle-left">', '<i class="icon-angle-right">'],
+    //         dots: false,
+    //         smartSpeed: 400,
+    //         autoplay: false,
+    //         autoplayTimeout: 15000,
+    //         responsive: {
+    //             0: {
+    //                 items: 1
+    //             },
+    //             560: {
+    //                 items: 2
+    //             },
+    //             992: {
+    //                 items: 3
+    //             },
+    //             1200: {
+    //                 items: 3
+    //             }
+    //         }
+    //     });
 
-        owlProductGallery.on('change.owl.carousel', function () {
-            $('.zoomContainer').remove();
-        });
+    //     owlProductGallery.on('change.owl.carousel', function () {
+    //         $('.zoomContainer').remove();
+    //     });
 
-        owlProductGallery.on('translated.owl.carousel', function () {
-            owlProductGallery.find('.active img').elevateZoom({
-                zoomType: "inner",
-                cursor: "crosshair",
-                zoomWindowFadeIn: 400,
-                zoomWindowFadeOut: 400,
-                responsive: true
-            });
-        });
-    }
+    //     owlProductGallery.on('translated.owl.carousel', function () {
+    //         owlProductGallery.find('.active img').elevateZoom({
+    //             zoomType: "inner",
+    //             cursor: "crosshair",
+    //             zoomWindowFadeIn: 400,
+    //             zoomWindowFadeOut: 400,
+    //             responsive: true
+    //         });
+    //     });
+    // }
 
-    // Product Gallery Separeted- product-sticky.html
-    if ($.fn.elevateZoom) {
-        $('.product-separated-item').find('img').elevateZoom({
-            zoomType: "inner",
-            cursor: "crosshair",
-            zoomWindowFadeIn: 400,
-            zoomWindowFadeOut: 400,
-            responsive: true
-        });
+    // // Product Gallery Separeted- product-sticky.html
+    // if ($.fn.elevateZoom) {
+    //     $('.product-separated-item').find('img').elevateZoom({
+    //         zoomType: "inner",
+    //         cursor: "crosshair",
+    //         zoomWindowFadeIn: 400,
+    //         zoomWindowFadeOut: 400,
+    //         responsive: true
+    //     });
 
-        // Create Array for gallery popup
-        var galleryArr = [];
-        $('.product-gallery-separated').find('img').each(function () {
-            var $this = $(this),
-                imgSrc = $this.attr('src'),
-                imgTitle = $this.attr('alt'),
-                obj = { 'src': imgSrc, 'title': imgTitle };
+    //     // Create Array for gallery popup
+    //     var galleryArr = [];
+    //     $('.product-gallery-separated').find('img').each(function () {
+    //         var $this = $(this),
+    //             imgSrc = $this.attr('src'),
+    //             imgTitle = $this.attr('alt'),
+    //             obj = { 'src': imgSrc, 'title': imgTitle };
 
-            galleryArr.push(obj);
-        })
+    //         galleryArr.push(obj);
+    //     })
 
-        $('#btn-separated-gallery').on('click', function (e) {
-            if ($.fn.magnificPopup) {
-                $.magnificPopup.open({
-                    items: galleryArr,
-                    type: 'image',
-                    gallery: {
-                        enabled: true
-                    },
-                    fixedContentPos: false,
-                    removalDelay: 600,
-                    closeBtnInside: false
-                }, 0);
+    //     $('#btn-separated-gallery').on('click', function (e) {
+    //         if ($.fn.magnificPopup) {
+    //             $.magnificPopup.open({
+    //                 items: galleryArr,
+    //                 type: 'image',
+    //                 gallery: {
+    //                     enabled: true
+    //                 },
+    //                 fixedContentPos: false,
+    //                 removalDelay: 600,
+    //                 closeBtnInside: false
+    //             }, 0);
 
-                e.preventDefault();
-            }
-        });
-    }
+    //             e.preventDefault();
+    //         }
+    //     });
+    // }
 
     // Checkout discount input - toggle label if input is empty etc...
     $('#checkout-discount-input').on('focus', function () {
@@ -612,62 +612,62 @@ $(document).ready(function () {
         $(this).addClass('active');
     });
 
-    $('body').on('click', '.btn-fullscreen', function (e) {
-        var galleryArr = [];
-        $(this).parents('.owl-stage-outer').find('.owl-item:not(.cloned)').each(function () {
-            var $this = $(this).find('img'),
-                imgSrc = $this.attr('src'),
-                imgTitle = $this.attr('alt'),
-                obj = { 'src': imgSrc, 'title': imgTitle };
-            galleryArr.push(obj);
-        });
+    // $('body').on('click', '.btn-fullscreen', function (e) {
+    //     var galleryArr = [];
+    //     $(this).parents('.owl-stage-outer').find('.owl-item:not(.cloned)').each(function () {
+    //         var $this = $(this).find('img'),
+    //             imgSrc = $this.attr('src'),
+    //             imgTitle = $this.attr('alt'),
+    //             obj = { 'src': imgSrc, 'title': imgTitle };
+    //         galleryArr.push(obj);
+    //     });
 
-        var ajaxUrl = $(this).attr('href');
+    //     var ajaxUrl = $(this).attr('href');
 
-        var mpInstance = $.magnificPopup.instance;
-        if (mpInstance.isOpen)
-            mpInstance.close();
+    //     var mpInstance = $.magnificPopup.instance;
+    //     if (mpInstance.isOpen)
+    //         mpInstance.close();
 
-        setTimeout(function () {
-            $.magnificPopup.open({
-                type: 'ajax',
-                mainClass: "mfp-ajax-product",
-                tLoading: '',
-                preloader: false,
-                removalDelay: 350,
-                items: {
-                    src: ajaxUrl
-                },
-                callbacks: {
-                    ajaxContentAdded: function () {
-                        // owlCarousels($('.quickView-content'), {
-                        //     onTranslate: function (e) {
-                        //         var $this = $(e.target),
-                        //             currentIndex = ($this.data('owl.carousel').current() + e.item.count - Math.ceil(e.item.count / 2)) % e.item.count;
-                        //         $('.quickView-content .carousel-dot').eq(currentIndex).addClass('active').siblings().removeClass('active');
-                        //         $('.curidx').html(currentIndex + 1);
-                        //     }
-                        // });
-                        quantityInputs();
-                    },
-                    open: function () {
-                        $('body').css('overflow-x', 'visible');
-                        $('.sticky-header.fixed').css('padding-right', '1.7rem');
-                    },
-                    close: function () {
-                        $('body').css('overflow-x', 'hidden');
-                        $('.sticky-header.fixed').css('padding-right', '0');
-                    }
-                },
+    //     setTimeout(function () {
+    //         $.magnificPopup.open({
+    //             type: 'ajax',
+    //             mainClass: "mfp-ajax-product",
+    //             tLoading: '',
+    //             preloader: false,
+    //             removalDelay: 350,
+    //             items: {
+    //                 src: ajaxUrl
+    //             },
+    //             callbacks: {
+    //                 ajaxContentAdded: function () {
+    //                     owlCarousels($('.quickView-content'), {
+    //                         onTranslate: function (e) {
+    //                             var $this = $(e.target),
+    //                                 currentIndex = ($this.data('owl.carousel').current() + e.item.count - Math.ceil(e.item.count / 2)) % e.item.count;
+    //                             $('.quickView-content .carousel-dot').eq(currentIndex).addClass('active').siblings().removeClass('active');
+    //                             $('.curidx').html(currentIndex + 1);
+    //                         }
+    //                     });
+    //                     quantityInputs();
+    //                 },
+    //                 open: function () {
+    //                     $('body').css('overflow-x', 'visible');
+    //                     $('.sticky-header.fixed').css('padding-right', '1.7rem');
+    //                 },
+    //                 close: function () {
+    //                     $('body').css('overflow-x', 'hidden');
+    //                     $('.sticky-header.fixed').css('padding-right', '0');
+    //                 }
+    //             },
 
-                ajax: {
-                    tError: '',
-                }
-            }, 0);
-        }, 500);
+    //             ajax: {
+    //                 tError: '',
+    //             }
+    //         }, 0);
+    //     }, 500);
 
-        e.preventDefault();
-    });
+    //     e.preventDefault();
+    // });
 
     if (document.getElementById('newsletter-popup-form')) {
         setTimeout(function () {
@@ -766,11 +766,11 @@ $(document).ready(function () {
     // }
 
 
-    // Select Colors
-    let itemColor = $('.product-nav-dots .product-nav-item')
-    itemColor.on('click', function () {
-        itemColor.removeClass('active')
-        $(this).addClass('active')
-    })
+    // // Select Colors
+    // let itemColor = $('.product-nav-dots .product-nav-item')
+    // itemColor.on('click', function () {
+    //     itemColor.removeClass('active')
+    //     $(this).addClass('active')
+    // })
 
 });

@@ -42,10 +42,14 @@ const HeaderMiddle = () => {
               <NavLink to={PATHS.ABOUT}>About Us</NavLink>
             </li>
             <li>
-              <NavLink to={PATHS.PRODUCT.INDEX}>Product</NavLink>
+              <NavLink to={PATHS.PRODUCT.INDEX} end>
+                Product
+              </NavLink>
             </li>
             <li>
-              <NavLink to={PATHS.BLOG.INDEX}>Blog</NavLink>
+              <NavLink to={PATHS.BLOG.INDEX} end>
+                Blog
+              </NavLink>
             </li>
             <li>
               <NavLink to={PATHS.CONTACT}>Contact Us</NavLink>

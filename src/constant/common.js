@@ -26,12 +26,12 @@ export const SORT_OPTIONS = {
   },
   pricehight: {
     value: 'pricehight',
-    label: 'Price Low to High',
+    label: 'Price Hight to Low',
     queryObj: { orderBy: 'price', order: '-1'  },
   },
   pricelow: {
     value: 'pricelow',
-    label: 'Price Hight to Low',
+    label: 'Price Low to High',
     queryObj: { orderBy: 'price', order: '1'  },
   },
   newest: {
