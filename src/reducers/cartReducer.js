@@ -2,6 +2,8 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import cartService from '../services/cartService';
 import { message } from 'antd';
 import tokenMethod from '../utils/token';
+import { handleShowModal } from './authReducer';
+import { MODAL_TYPES } from '../constant/common';
 
 const initialState = {
   cartInfo: {},
@@ -47,14 +49,64 @@ export const handleGetCart = createAsyncThunk('cart/handleGetCart', async (_, { 
   }
 });
 
-export const handleUpdateCart = createAsyncThunk(
-  'cart/handleUpdateCart',
+export const handleRemoveCartThunk = createAsyncThunk(
+  'cart/handleRemoveCartThunk',
   async (payload, { dispatch, getState, rejectWithValue }) => {
+    const { index } = payload;
+    const { cartInfo } = getState()?.cart || {};
+    const { product, quantity, variant, totalProduct } = cartInfo || {};
+
+    let newProduct = product?.map((product) => product.id);
+    let newQuantity = [...quantity];
+    let newVariant = [...variant];
+    let newTotalProduct = [...totalProduct];
+    newProduct.splice(index, 1);
+    newQuantity.splice(index, 1);
+    newVariant.splice(index, 1);
+    newTotalProduct.splice(index, 1);
+
+    const newSubTotal = [...newTotalProduct]?.reduce((sum, product) => Number(sum) + Number(product), 0) || 0;
+    const newTotal = newSubTotal - cartInfo.discount;
+
+    const removePayload = {
+      ...cartInfo,
+      variant: newVariant,
+      subTotal: newSubTotal,
+      total: newTotal,
+      product: newProduct,
+      quantity: newQuantity,
+      totalProduct: newTotalProduct,
+    };
+
+    console.log('removePayload :>> ', JSON.stringify(removePayload));
+
+    try {
+      const res = await cartService.updateCart(removePayload);
+      if (res?.data?.data?.id) {
+        dispatch(handleGetCart());
+        message.success('Removed from cart successfully');
+        return res?.data?.data;
+      }
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const handleAddCartThunk = createAsyncThunk(
+  'cart/handleAddCartThunk',
+  async (payload, { dispatch, getState, rejectWithValue }) => {
+    if (!tokenMethod.get()) {
+      dispatch(handleShowModal(MODAL_TYPES.LOGIN));
+      return;
+    }
     const { addedId, addedColor, addedQuantity, addedPrice } = payload;
     const { cartInfo } = getState()?.cart || {};
     let addPayload = {};
     if (cartInfo?.id) {
-      const matchIndex = cartInfo.product?.findIndex((product, index) => product.id === addedId && cartInfo.variant[index] === addedColor);
+      const matchIndex = cartInfo.product?.findIndex(
+        (product, index) => product.id === addedId && cartInfo.variant[index] === addedColor
+      );
       const newProduct = cartInfo.product?.map((product) => product.id);
       const newQuantity = [...(cartInfo.quantity ?? [])];
       const newVariant = [...(cartInfo.variant ?? [])];
@@ -83,7 +135,6 @@ export const handleUpdateCart = createAsyncThunk(
         quantity: newQuantity,
         totalProduct: newTotalProduct,
       };
-
     } else {
       addPayload = {
         variant: addedColor,
@@ -101,7 +152,7 @@ export const handleUpdateCart = createAsyncThunk(
       const res = await cartService.updateCart(addPayload);
       if (res?.data?.data?.id) {
         dispatch(handleGetCart());
-        message.success('Cart updated successfully');
+        message.success('Added to cart successfully');
         return res?.data?.data;
       }
     } catch (error) {

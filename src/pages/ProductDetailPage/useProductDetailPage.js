@@ -6,8 +6,7 @@ import useDebounce from '../../hooks/useDebounce';
 import { message } from 'antd';
 import reviewService from '../../services/reviewService';
 import { useDispatch } from 'react-redux';
-import { handleUpdateCart } from '../../reducers/cartReducer';
-// import useQuery from '../../hooks/useQuery';
+import { handleAddCartThunk } from '../../reducers/cartReducer';
 
 const useProductDetailPage = () => {
   const dispatch = useDispatch();
@@ -63,7 +62,7 @@ const useProductDetailPage = () => {
     };
 
     try {
-      const res = dispatch(handleUpdateCart(payload)).unwrap();
+      const res = dispatch(handleAddCartThunk(payload)).unwrap();
       if (res) {
         resetColor();
         resetQuantity();
@@ -80,6 +79,7 @@ const useProductDetailPage = () => {
 
   const detailInfoProps = {
     ...detailData,
+    reviews: reviewData || [],
     colorRef,
     quantityRef,
     handleAddToCart,

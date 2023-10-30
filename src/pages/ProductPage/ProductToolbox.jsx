@@ -32,8 +32,7 @@ const ProductToolbox = ({ getActiveSort, handleChangeSort, products, pagination 
               SORT_OPTIONS.newest,
               SORT_OPTIONS.rating,
             ]}
-            defaultValue={SORT_OPTIONS.popularity.value}
-            value={activeSort}
+            value={activeSort || SORT_OPTIONS.popularity.value}
           />
         </div>
       </div>

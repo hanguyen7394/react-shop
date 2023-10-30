@@ -7452,7 +7452,7 @@ p {
     height: 3rem;
 }
 
-.social-icons-sm .social-icon:not(:last-child) {
+.social-icons-sm .react-share__ShareButton:not(:last-child) {
     margin-right: 0.5rem;
 }
 

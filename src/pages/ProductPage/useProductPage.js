@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useLocation, useSearchParams } from 'react-router-dom';
 import useMutation from '../../hooks/useMutation';
 import productService from '../../services/productService';
@@ -28,22 +28,16 @@ const useProductPage = () => {
   const categories = categoryData?.products || [];
 
   useEffect(() => {
-    if (!Object.keys(queryObj).length) {
-      const queryObjDefault = { limit: PRODUCT_LIMIT, page: 1 };
-      getProductList(`?${queryString.stringify(queryObjDefault)}`);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (!!search) {
-      getProductList(search);
-    }
+    const newQueryString = queryString.stringify({
+      ...queryObj,
+      limit: PRODUCT_LIMIT
+    });
+    getProductList(`?${newQueryString}`);
   }, [search]);
 
-  const updateQueryString = (queryObj1) => {
-
+  const updateQueryString = (newQueryObj) => {
     const newQueryString = queryString.stringify({
-      ...queryObj1,
+      ...newQueryObj,
       limit: PRODUCT_LIMIT,
     });
 
@@ -73,6 +67,7 @@ const useProductPage = () => {
       updateQueryString({
         ...queryObj,
         ...sortQueryObj,
+        stopSrolling: true,
         page: 1,
       });
     }

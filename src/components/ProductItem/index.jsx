@@ -3,9 +3,29 @@ import { Link } from 'react-router-dom';
 import { PATHS } from '../../constant/paths';
 import { formatCurrency } from '../../utils/format';
 import { calcRateWidth, getSalePrice } from '../../utils/common';
+import { useDispatch } from 'react-redux';
+import { handleAddCartThunk } from '../../reducers/cartReducer';
 
-const ProductItem = ({ name, images, price, slug, rating, discount }) => {
+const ProductItem = ({ id, name, color, images, price, slug, rating, discount }) => {
+  const dispatch = useDispatch();
   const detailPath = `${PATHS.PRODUCT.INDEX}/${slug}`;
+
+  const _onAddToCart = (e) => {
+    e.preventDefault();
+
+    const payload = {
+      addedId: id,
+      addedColor: color?.[0],
+      addedQuantity: 1,
+      addedPrice: price - discount,
+    };
+
+    try {
+      dispatch(handleAddCartThunk(payload));
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <div className="product product-2">
@@ -24,9 +44,9 @@ const ProductItem = ({ name, images, price, slug, rating, discount }) => {
           </a>
         </div>
         <div className="product-action product-action-dark">
-          <a href="#" className="btn-product btn-cart" title="Add to cart">
+          <Link onClick={_onAddToCart} className="btn-product btn-cart" title="Add to cart">
             <span>add to cart</span>
-          </a>
+          </Link>
         </div>
       </figure>
       <div className="product-body">

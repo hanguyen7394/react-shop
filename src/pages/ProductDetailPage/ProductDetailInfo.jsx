@@ -5,8 +5,25 @@ import { Link } from 'react-router-dom';
 import { PATHS } from '../../constant/paths';
 import ProductQuantity from '../../components/ProductQuantity';
 import ProductColor from '../../components/ProductColor';
+import ShareLink from '../../components/ShareLink';
 
-const ProductDetailInfo = ({ name, rating, price, discount, title, color, category, stock, colorRef, quantityRef, handleAddToCart }) => {
+const ProductDetailInfo = ({
+  name,
+  rating,
+  price,
+  discount,
+  images,
+  title,
+  description,
+  color,
+  category,
+  stock,
+  reviews,
+  colorRef,
+  quantityRef,
+  handleAddToCart,
+}) => {
+  const path = window.location.href;
   let categories = category || [];
   categories = Array.isArray(categories) ? categories : [categories];
 
@@ -23,16 +40,14 @@ const ProductDetailInfo = ({ name, rating, price, discount, title, color, catego
           <div className="ratings-val" style={{ width: calcRateWidth(rating) }} />
         </div>
         <a className="ratings-text" href="#product-review-link" id="review-link">
-          ( 2 Reviews )
+          ( {reviews?.length} Reviews )
         </a>
       </div>
       <div className="product-price">
         <span className="new-price">{getSalePrice(price, discount)}</span>
         {discount > 0 && <span className="old-price">Was {formatCurrency.format(price)}</span>}
       </div>
-      <div className="product-content">
-        <p>{title}</p>
-      </div>
+      <div className="product-content" dangerouslySetInnerHTML={{ __html: description }} />
       {!!color?.length && <ProductColor colors={color} ref={colorRef} />}
       <ProductQuantity max={stock} ref={quantityRef} />
       <div className="product-details-action">
@@ -58,18 +73,15 @@ const ProductDetailInfo = ({ name, rating, price, discount, title, color, catego
         )}
         <div className="social-icons social-icons-sm">
           <span className="social-label">Share:</span>
-          <a href="https://www.facebook.com/" className="social-icon" title="Facebook" target="_blank">
+          <ShareLink path={path} title={title}>
             <i className="icon-facebook-f" />
-          </a>
-          <a href="https://twitter.com/" className="social-icon" title="Twitter" target="_blank">
+          </ShareLink>
+          <ShareLink path={path} title={title} type="twitter">
             <i className="icon-twitter" />
-          </a>
-          <a href="https://www.instagram.com/" className="social-icon" title="Instagram" target="_blank">
-            <i className="icon-instagram" />
-          </a>
-          <a href="https://www.pinterest.com/" className="social-icon" title="Pinterest" target="_blank">
+          </ShareLink>
+          <ShareLink path={path} title={title} image={images?.[0]} type="pinterest">
             <i className="icon-pinterest" />
-          </a>
+          </ShareLink>
         </div>
       </div>
     </div>
