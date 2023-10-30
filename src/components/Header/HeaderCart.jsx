@@ -5,75 +5,156 @@ import { PATHS } from '../../constant/paths';
 import { getSalePrice } from '../../utils/common';
 import { formatCurrency } from '../../utils/format';
 import { handleRemoveCartThunk } from '../../reducers/cartReducer';
+import styled from 'styled-components';
+import ProductColor from '../ProductColor';
+import { Modal } from 'antd';
+
+const DropdownStyled = styled.div`
+  max-height: 30vh;
+  overflow-y: scroll;
+  padding-right: 15px;
+
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #888;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+`;
+
+const CartDetailStyled = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  .product-variant {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 14px;
+
+    .details-filter-row {
+      margin: 0;
+    }
+
+    label {
+      width: 50px;
+    }
+  }
+`;
 
 const HeaderCart = () => {
   const dispatch = useDispatch();
-  const { cartInfo } = useSelector((state) => state.cart);
+  const { confirm } = Modal;
+  const { cartInfo, cartLoading } = useSelector((state) => state.cart);
 
-  const { product: products, quantity, subTotal, variant, totalProduct } = cartInfo || {};
+  const { product, quantity, subTotal, variant, totalProduct, shipping } = cartInfo || {};
 
-  const _onRemoveProduct = (e, index) => {
+  const products = product?.map((item, index) => {
+    return {
+      ...item,
+      quantity: quantity[index],
+      totalProduct: totalProduct[index],
+      variant: variant[index],
+    };
+  });
+
+  const _onRemoveProduct = (e, removeIndex) => {
     e.preventDefault();
     e.stopPropagation();
-    dispatch(handleRemoveCartThunk({index}));
+    if (cartLoading || removeIndex < 0) return;
+    const removeProduct = products[removeIndex];
+    confirm({
+      title: 'Do you want to remove this item from cart?',
+      content: (
+        <>
+          <p>{removeProduct.name}</p>
+          <p>
+            {removeProduct.quantity}x{getSalePrice(removeProduct.price, removeProduct.discount)}
+          </p>
+        </>
+      ),
+      onOk() {
+        dispatch(handleRemoveCartThunk({ removeIndex }));
+      },
+    });
   };
 
   return (
     <div className="dropdown cart-dropdown">
-      <a
-        href="#"
-        className="dropdown-toggle"
-        role="button"
-        data-toggle="dropdown"
-        aria-haspopup="true"
-        aria-expanded="false"
-        data-display="static"
-      >
+      <a className="dropdown-toggle">
         <i className="icon-shopping-cart" />
         {!!products?.length && <span className="cart-count">{products.length}</span>}
       </a>
-      {!!products?.length && (
-        <div className="dropdown-menu dropdown-menu-right">
-          <div className="dropdown-cart-products">
-            {products?.map(({ slug, name, images, price, discount }, index) => {
-              const detailPath = `${PATHS.PRODUCT.INDEX}/${slug}`;
-              return (
-                <div key={index} className="product">
-                  <div className="product-cart-details">
-                    <h4 className="product-title">
-                      <Link to={detailPath}>{name}</Link>
-                    </h4>
-                    <span className="cart-product-info">
-                      <span className="cart-product-qty">{quantity[index]}</span> x {getSalePrice(price, discount)}
-                    </span>
-                  </div>
-                  <figure className="product-image-container">
-                    <Link to={detailPath} className="product-image">
-                      <img src={images?.[0]} alt="product" />
+      <div className="dropdown-menu dropdown-menu-right" style={{ width: '400px' }}>
+        {!!products?.length ? (
+          <>
+            <DropdownStyled className="dropdown-cart-products">
+              {products?.map(({ slug, name, images, price, discount, variant, quantity }, index) => {
+                const detailPath = `${PATHS.PRODUCT.INDEX}/${slug}`;
+
+                let imagePath = images[0];
+                if (imagePath?.split('https').length > 2) {
+                  imagePath = imagePath?.split('https');
+                  imagePath = 'https' + imagePath[2];
+                }
+
+                return (
+                  <div key={index} className="product">
+                    <CartDetailStyled className="product-cart-details">
+                      <h4 className="product-title">
+                        <Link to={detailPath}>{name}</Link>
+                      </h4>
+                      <div className="product-variant">
+                        <ProductColor colors={[variant]} />
+                      </div>
+                      <span className="cart-product-info">
+                        <span className="cart-product-qty">{quantity}</span> x {getSalePrice(price, discount)}
+                      </span>
+                    </CartDetailStyled>
+                    <figure className="product-image-container">
+                      <Link to={detailPath} className="product-image">
+                        <img src={imagePath} alt={name} />
+                      </Link>
+                    </figure>
+                    <Link onClick={(e) => _onRemoveProduct(e, index)} className="btn-remove" title="Remove Product">
+                      <i className="icon-close" />
                     </Link>
-                  </figure>
-                  <Link onClick={(e) => _onRemoveProduct(e, index)} className="btn-remove" title="Remove Product">
-                    <i className="icon-close" />
-                  </Link>
-                </div>
-              );
-            })}
-          </div>
-          <div className="dropdown-cart-total">
-            <span>Total</span>
-            <span className="cart-total-price">{formatCurrency.format(subTotal)}</span>
-          </div>
-          <div className="dropdown-cart-action">
-            <Link to={PATHS.CART} className="btn btn-primary">
-              View Cart
-            </Link>
-            <Link to={PATHS.CHECKOUT} className="btn btn-outline-primary-2">
-              <span>Checkout</span>
-              <i className="icon-long-arrow-right" />
-            </Link>
-          </div>
-        </div>
-      )}
+                  </div>
+                );
+              })}
+            </DropdownStyled>
+            <div className="dropdown-cart-total">
+              <span>Total</span>
+              <span className="cart-total-price">{formatCurrency.format(subTotal)}</span>
+            </div>
+            <div className="dropdown-cart-action">
+              <Link to={PATHS.CART} className="btn btn-primary">
+                View Cart
+              </Link>
+              {shipping?.typeShip && (
+                <Link to={PATHS.CHECKOUT} className="btn btn-outline-primary-2">
+                  <span>Checkout</span>
+                  <i className="icon-long-arrow-right" />
+                </Link>
+              )}
+            </div>
+          </>
+        ) : (
+          <p>
+            There is no any product in cart <Link to={PATHS.PRODUCT.INDEX}>Go to shop</Link>
+          </p>
+        )}
+      </div>
     </div>
   );
 };

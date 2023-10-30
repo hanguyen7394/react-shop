@@ -52,7 +52,7 @@ export const handleGetCart = createAsyncThunk('cart/handleGetCart', async (_, { 
 export const handleRemoveCartThunk = createAsyncThunk(
   'cart/handleRemoveCartThunk',
   async (payload, { dispatch, getState, rejectWithValue }) => {
-    const { index } = payload;
+    const { removeIndex } = payload;
     const { cartInfo } = getState()?.cart || {};
     const { product, quantity, variant, totalProduct } = cartInfo || {};
 
@@ -60,13 +60,13 @@ export const handleRemoveCartThunk = createAsyncThunk(
     let newQuantity = [...quantity];
     let newVariant = [...variant];
     let newTotalProduct = [...totalProduct];
-    newProduct.splice(index, 1);
-    newQuantity.splice(index, 1);
-    newVariant.splice(index, 1);
-    newTotalProduct.splice(index, 1);
+    newProduct.splice(removeIndex, 1);
+    newQuantity.splice(removeIndex, 1);
+    newVariant.splice(removeIndex, 1);
+    newTotalProduct.splice(removeIndex, 1);
 
     const newSubTotal = [...newTotalProduct]?.reduce((sum, product) => Number(sum) + Number(product), 0) || 0;
-    const newTotal = newSubTotal - cartInfo.discount;
+    const newTotal = newSubTotal - (cartInfo?.discount ?? 0) + (cartInfo?.shipping?.price ?? 0);
 
     const removePayload = {
       ...cartInfo,
@@ -76,9 +76,9 @@ export const handleRemoveCartThunk = createAsyncThunk(
       product: newProduct,
       quantity: newQuantity,
       totalProduct: newTotalProduct,
+      shipping: newProduct?.length >  0 ? cartInfo?.shipping : {},
+      discount: newProduct?.length >  0 ? cartInfo?.discount : 0,
     };
-
-    console.log('removePayload :>> ', JSON.stringify(removePayload));
 
     try {
       const res = await cartService.updateCart(removePayload);
