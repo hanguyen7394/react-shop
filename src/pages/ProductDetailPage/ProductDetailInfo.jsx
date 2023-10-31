@@ -48,8 +48,21 @@ const ProductDetailInfo = ({
         {discount > 0 && <span className="old-price">Was {formatCurrency.format(price)}</span>}
       </div>
       <div className="product-content" dangerouslySetInnerHTML={{ __html: description }} />
-      {!!color?.length && <ProductColor colors={color} ref={colorRef} />}
-      <ProductQuantity max={stock} ref={quantityRef} />
+
+      {!!color?.length && (
+        <div className="details-filter-row details-row-size">
+          <label>Color:</label>
+          <ProductColor colors={color} ref={colorRef} />
+        </div>
+      )}
+
+      <div className="details-filter-row details-row-size">
+        <label htmlFor="qty">Qty:</label>
+        <div className="product-details-quantity">
+          <ProductQuantity max={stock} ref={quantityRef} />
+        </div>
+      </div>
+
       <div className="product-details-action">
         <Link onClick={_onAddToCart} className="btn-product btn-cart">
           <span>add to cart</span>

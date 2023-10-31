@@ -66,7 +66,9 @@ export const handleRemoveCartThunk = createAsyncThunk(
     newTotalProduct.splice(removeIndex, 1);
 
     const newSubTotal = [...newTotalProduct]?.reduce((sum, product) => Number(sum) + Number(product), 0) || 0;
-    const newTotal = newSubTotal - (cartInfo?.discount ?? 0) + (cartInfo?.shipping?.price ?? 0);
+    const shipping = newProduct?.length > 0 ? cartInfo?.shipping : {};
+    const discount = newProduct?.length > 0 ? cartInfo?.discount : 0;
+    const newTotal = newSubTotal - (discount ?? 0) + (shipping?.price ?? 0);
 
     const removePayload = {
       ...cartInfo,
@@ -76,8 +78,8 @@ export const handleRemoveCartThunk = createAsyncThunk(
       product: newProduct,
       quantity: newQuantity,
       totalProduct: newTotalProduct,
-      shipping: newProduct?.length >  0 ? cartInfo?.shipping : {},
-      discount: newProduct?.length >  0 ? cartInfo?.discount : 0,
+      shipping,
+      discount,
     };
 
     try {
@@ -114,7 +116,6 @@ export const handleAddCartThunk = createAsyncThunk(
 
       if (matchIndex > -1) {
         newQuantity[matchIndex] = Number(newQuantity[matchIndex] + Number(addedQuantity));
-        newVariant[matchIndex] = addedColor;
         newTotalProduct[matchIndex] = Number(newTotalProduct[matchIndex]) + addedPrice * addedQuantity;
       } else {
         newProduct.push(addedId);
@@ -153,6 +154,22 @@ export const handleAddCartThunk = createAsyncThunk(
       if (res?.data?.data?.id) {
         dispatch(handleGetCart());
         message.success('Added to cart successfully');
+        return res?.data?.data;
+      }
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const handleUpdateCartThunk = createAsyncThunk(
+  'cart/handleUpdateCartThunk',
+  async (payload, { dispatch, rejectWithValue }) => {
+    try {
+      const res = await cartService.updateCart(payload);
+      if (res?.data?.data?.id) {
+        dispatch(handleGetCart());
+        message.success('Updated cart successfully');
         return res?.data?.data;
       }
     } catch (error) {

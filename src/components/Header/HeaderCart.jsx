@@ -8,6 +8,7 @@ import { handleRemoveCartThunk } from '../../reducers/cartReducer';
 import styled from 'styled-components';
 import ProductColor from '../ProductColor';
 import { Modal } from 'antd';
+import { VariantStyled } from '../Styled-Components/styled-components';
 
 const DropdownStyled = styled.div`
   max-height: 30vh;
@@ -35,21 +36,6 @@ const CartDetailStyled = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
-
-  .product-variant {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 14px;
-
-    .details-filter-row {
-      margin: 0;
-    }
-
-    label {
-      width: 50px;
-    }
-  }
 `;
 
 const HeaderCart = () => {
@@ -114,9 +100,9 @@ const HeaderCart = () => {
                       <h4 className="product-title">
                         <Link to={detailPath}>{name}</Link>
                       </h4>
-                      <div className="product-variant">
-                        <ProductColor colors={[variant]} />
-                      </div>
+                      <VariantStyled className="product-variant">
+                        Color: <ProductColor colors={[variant]} />
+                      </VariantStyled>
                       <span className="cart-product-info">
                         <span className="cart-product-qty">{quantity}</span> x {getSalePrice(price, discount)}
                       </span>
