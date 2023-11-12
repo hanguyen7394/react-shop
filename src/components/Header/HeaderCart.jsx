@@ -121,7 +121,7 @@ const HeaderCart = () => {
             </DropdownStyled>
             <div className="dropdown-cart-total">
               <span>Total</span>
-              <span className="cart-total-price">{formatCurrency.format(subTotal)}</span>
+              <span className="cart-total-price">{formatCurrency(subTotal)}</span>
             </div>
             <div className="dropdown-cart-action">
               <Link to={PATHS.CART} className="btn btn-primary">

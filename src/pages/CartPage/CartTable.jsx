@@ -92,7 +92,7 @@ const CartTable = ({ products, quantityRef, handleUpdateQuantity }) => {
                     />
                   </div>
                 </td>
-                <td className="total-col">{formatCurrency.format(totalProduct)}</td>
+                <td className="total-col">{formatCurrency(totalProduct)}</td>
                 <td className="remove-col">
                   <button onClick={(e) => _onRemoveProduct(e, index)} className="btn-remove">
                     <i className="icon-close" />

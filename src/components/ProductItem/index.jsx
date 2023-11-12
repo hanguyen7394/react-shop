@@ -55,7 +55,7 @@ const ProductItem = ({ id, name, color, images, price, slug, rating, discount })
         </h3>
         <div className="product-price">
           <span className="new-price">{getSalePrice(price, discount)}</span>
-          {discount > 0 && <span className="old-price">Was {formatCurrency.format(price)}</span>}
+          {discount > 0 && <span className="old-price">Was {formatCurrency(price)}</span>}
         </div>
         <div className="ratings-container">
           <div className="ratings">

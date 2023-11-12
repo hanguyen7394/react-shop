@@ -25,7 +25,7 @@ const CartSummary = ({ subTotal, total, typeShip, handleUpdateShipping }) => {
         <tbody>
           <tr className="summary-subtotal">
             <td>Subtotal:</td>
-            <td>{formatCurrency.format(subTotal)}</td>
+            <td>{formatCurrency(subTotal)}</td>
           </tr>
           <tr className="summary-shipping">
             <td>Shipping:</td>
@@ -38,7 +38,7 @@ const CartSummary = ({ subTotal, total, typeShip, handleUpdateShipping }) => {
                   <td>
                     <RadioGroup.Item value={value}>{label}</RadioGroup.Item>
                   </td>
-                  <td>{formatCurrency.format(price)}</td>
+                  <td>{formatCurrency(price)}</td>
                 </tr>
               );
             })}
@@ -52,7 +52,7 @@ const CartSummary = ({ subTotal, total, typeShip, handleUpdateShipping }) => {
           </tr>
           <tr className="summary-total">
             <td>Total:</td>
-            <td>{formatCurrency.format(total)}</td>
+            <td>{formatCurrency(total)}</td>
           </tr>
         </tbody>
       </table>

@@ -165,8 +165,14 @@ export const handleAddCartThunk = createAsyncThunk(
 export const handleUpdateCartThunk = createAsyncThunk(
   'cart/handleUpdateCartThunk',
   async (payload, { dispatch, rejectWithValue }) => {
+    const newProduct = payload?.product?.map((product) => product.id);
+    const payloadCustom = {
+      ...payload,
+      product: newProduct,
+    };
+
     try {
-      const res = await cartService.updateCart(payload);
+      const res = await cartService.updateCart(payloadCustom);
       if (res?.data?.data?.id) {
         dispatch(handleGetCart());
         message.success('Updated cart successfully');

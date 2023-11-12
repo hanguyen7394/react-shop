@@ -1,13 +1,14 @@
+import { message } from 'antd';
 import { Suspense, lazy, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { message } from 'antd';
-import { PATHS } from './constant/paths';
-import tokenMethod from './utils/token';
-import { handleGetProfile } from './reducers/authReducer';
-import MainLayout from './layout/MainLayout';
 import ComponentLoading from './components/ComponentLoading';
+import { PATHS } from './constant/paths';
+import MainLayout from './layout/MainLayout';
+import { handleGetProfile } from './reducers/authReducer';
 import { handleGetCart } from './reducers/cartReducer';
+import tokenMethod from './utils/token';
+const CheckoutSuccessPage = lazy(() => import('./pages/CheckoutSuccessPage'));
 const HomePage = lazy(() => import('./pages/HomePage'));
 const AboutPage = lazy(() => import('./pages/AboutPage'));
 const Page404 = lazy(() => import('./pages/Page404'));
@@ -81,7 +82,7 @@ function App() {
                 <Route path={PATHS.DASHBOARD.WISHLIST} element={<MyWishlist />} />
               </Route>
               <Route path={PATHS.CHECKOUT} element={<CheckoutPage />} />
-              <Route path={PATHS.CHECKOUT_SUCCESS} element={<CheckoutPage />} />
+              <Route path={PATHS.CHECKOUT_SUCCESS} element={<CheckoutSuccessPage />} />
             </Route>
             <Route path="*" element={<Page404 />} />
           </Route>

@@ -35,7 +35,7 @@ const HomeDealOutlet = ({ dealProducts }) => {
                 </h3>
                 <div className="product-price">
                   <span className="new-price">{getSalePrice(dealCountDown?.price, dealCountDown?.discount)}</span>
-                  <span className="old-price">Was {formatCurrency.format(dealCountDown?.price)}</span>
+                  <span className="old-price">Was {formatCurrency(dealCountDown?.price)}</span>
                 </div>
                 <Link to={detailPath} className="btn btn-link">
                   <span>Shop Now</span>

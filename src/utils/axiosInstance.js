@@ -38,4 +38,14 @@ axiosInstance.interceptors.response.use(
   }
 );
 
+axiosInstance.interceptors.request.use(
+  (config) => {
+    config.headers.Authorization = `Bearer ${tokenMethod.get()?.accessToken}`;
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
 export default axiosInstance;

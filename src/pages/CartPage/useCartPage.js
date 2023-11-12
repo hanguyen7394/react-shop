@@ -20,13 +20,11 @@ const useCartPage = () => {
     }) || [];
 
   const handleUpdateShipping = (typeShip) => {
-    const newProduct = product?.map((product) => product.id);
     const selectedShipping = SHIPPING_OPTIONS.find((option) => option.value === typeShip);
 
     if (!!selectedShipping) {
       const shippingPayload = {
         ...cartInfo,
-        product: newProduct,
         shipping: {
           typeShip: selectedShipping?.value,
           price: selectedShipping.price,
@@ -40,7 +38,6 @@ const useCartPage = () => {
 
   const handleUpdateQuantity = (valueQuantity, index) => {
     const { price, discount } = product[index];
-    const newProduct = product?.map((product) => product.id);
 
     const newQuantity = [...quantity];
     newQuantity[index] = Number(valueQuantity);
@@ -53,7 +50,6 @@ const useCartPage = () => {
 
     const quantityPayload = {
       ...cartInfo,
-      product: newProduct,
       quantity: newQuantity,
       totalProduct: newTotalProduct,
       subTotal: newSubTotal,

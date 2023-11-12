@@ -1,13 +1,13 @@
 import classNames from 'classnames';
 import { forwardRef } from 'react';
 
-const FormField = ({ name, label, required, error, renderField = undefined, ...fieldProps }, ref) => {
+const FormField = ({ className='form-group', name, label, required, error, renderField = undefined, ...fieldProps }, ref) => {
   return (
-    <div className="form-group">
+    <div className={className}>
       <label htmlFor={name}>
         {label} {required && <span>*</span>}
       </label>
-      {renderField?.({ ...fieldProps, error, ref, name }) || (
+      {renderField?.({ ...fieldProps, error, name }, ref) || (
         <input
           id={name}
           name={name}

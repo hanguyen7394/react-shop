@@ -32,7 +32,7 @@ export const owlCarousels = ($wrap, options) => {
 };
 
 export const getSalePrice = (price, discount) => {
-  return formatCurrency.format(price - discount);
+  return formatCurrency(price - discount);
 };
 
 export const scrollToTop = () => {
@@ -46,4 +46,19 @@ export const scrollToTop = () => {
 
 export const calcRateWidth = (rating) => {
   return `${(100 / 5) * rating}%`;
+}
+
+export const removeAccents = (str) => {
+  var from = "àáãảạăằắẳẵặâầấẩẫậèéẻẽẹêềếểễệđùúủũụưừứửữựòóỏõọôồốổỗộơờớởỡợìíỉĩịäëïîöüûñçýỳỹỵỷ",
+      to   = "aaaaaaaaaaaaaaaaaeeeeeeeeeeeduuuuuuuuuuuoooooooooooooooooiiiiiaeiiouuncyyyyy";
+  for (var i=0, l=from.length ; i < l ; i++) {
+    str = str.replace(RegExp(from[i], "gi"), to[i]);
+  }
+
+  str = str.toLowerCase()
+        .trim()
+        .replace(/[^a-z0-9\-]/g, '-')
+        .replace(/-+/g, '-');
+
+  return str;
 }

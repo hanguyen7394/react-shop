@@ -5,7 +5,6 @@ const useQuery = (promise, dependencies = []) => {
   const [error, setError] = useState();
   const [data, setData] = useState();
 
-
   useEffect(() => {
     fetchData();
   }, dependencies);
@@ -14,7 +13,7 @@ const useQuery = (promise, dependencies = []) => {
     try {
       setLoading(true);
       const res = await promise(query);
-      setData(res.data?.data || []);
+      setData(res?.data?.data || []);
     } catch (error) {
       console.error(error);
       setError(error);
