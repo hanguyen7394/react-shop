@@ -7,7 +7,7 @@ const FormField = ({ className='form-group', name, label, required, error, rende
       <label htmlFor={name}>
         {label} {required && <span>*</span>}
       </label>
-      {renderField?.({ ...fieldProps, error, name }, ref) || (
+      {renderField?.({ ...fieldProps, error, name }) || (
         <input
           id={name}
           name={name}

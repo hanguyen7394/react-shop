@@ -16,6 +16,10 @@ const DiscountWrapperStyled = styled.div`
   .checkout-discount {
     margin-bottom: 0;
     flex: 1;
+
+    .form-control {
+      background-color: transparent;
+    }
   }
 
   label {
@@ -27,15 +31,15 @@ const CheckoutDiscount = ({ addedCoupon, handleAddCoupon, handleRemoveCoupon }) 
   useEffect(() => {
     $('#checkout-discount-input')
       .on('focus', function () {
-        $(this).parent('form').find('label').css('opacity', 0);
+        $(this).parent('form').find('label').css('display', 'none');
       })
       .on('blur', function () {
         var $this = $(this);
 
         if ($this.val().length !== 0) {
-          $this.parent('form').find('label').css('opacity', 0);
+          $this.parent('form').find('label').css('display', 'none');
         } else {
-          $this.parent('form').find('label').css('opacity', 1);
+          $this.parent('form').find('label').css('display', 'block');
         }
       });
   }, []);
@@ -45,6 +49,10 @@ const CheckoutDiscount = ({ addedCoupon, handleAddCoupon, handleRemoveCoupon }) 
       discountCode: addedCoupon,
     });
   }, [addedCoupon]);
+
+  useEffect(() => {
+    handleRemoveCoupon();
+  }, []);
 
   const {
     register,
@@ -74,6 +82,7 @@ const CheckoutDiscount = ({ addedCoupon, handleAddCoupon, handleRemoveCoupon }) 
             {...register('discountCode', {
               required: MESSAGE.required,
             })}
+            disabled={addedCoupon}
           />
           <label htmlFor="checkout-discount-input" className="text-truncate">
             Have a coupon? <span>Click here to enter your code</span>

@@ -10,7 +10,7 @@ const useCheckoutPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { cartInfo } = useSelector((state) => state.cart);
-  const { subTotal, shipping, discountCode } = cartInfo || {};
+  const { subTotal, shipping } = cartInfo || {};
   const [addedCoupon, setAddedCoupon] = useState('');
 
   const handleAddCoupon = async (code) => {
@@ -25,7 +25,6 @@ const useCheckoutPage = () => {
           handleUpdateCartThunk({
             ...cartInfo,
             discount: couponInfo?.value || 0,
-            discountCode: couponInfo?.code || '',
             total: subTotal - (couponInfo?.value || 0) + (shipping?.price || 0),
           })
         );
@@ -46,7 +45,6 @@ const useCheckoutPage = () => {
         handleUpdateCartThunk({
           ...cartInfo,
           discount: 0,
-          discountCode: '',
           total: subTotal + (shipping?.price || 0),
         })
       );

@@ -83,7 +83,7 @@ const CheckoutForm = ({ handleCheckout }) => {
   const _onProvinceChange = (provinceId) => {
     handleProvinceChange?.(provinceId);
     reset?.({
-      ...getValues,
+      ...getValues(),
       province: provinceId,
       district: undefined,
       ward: undefined,
@@ -93,7 +93,7 @@ const CheckoutForm = ({ handleCheckout }) => {
   const _onDistrictChange = (districtId) => {
     handleDistrictChange?.(districtId);
     reset?.({
-      ...getValues,
+      ...getValues(),
       district: districtId,
       ward: undefined,
     });
@@ -102,7 +102,7 @@ const CheckoutForm = ({ handleCheckout }) => {
   const _onWardChange = (wardId) => {
     handleWardChange?.(wardId);
     reset?.({
-      ...getValues,
+      ...getValues(),
       ward: wardId,
     });
   };
@@ -194,8 +194,6 @@ const CheckoutForm = ({ handleCheckout }) => {
                         showSearch
                         placeholder="Province/City"
                         onChange={_onProvinceChange}
-                        optionFilterProp="children" //??
-                        suffixIcon={<></>} //??
                         status={errors?.province ? 'error' : ''}
                         filterOption={(input, option) =>
                           removeAccents(option?.label ?? '')
@@ -228,8 +226,6 @@ const CheckoutForm = ({ handleCheckout }) => {
                         showSearch
                         placeholder="District/Town"
                         onChange={_onDistrictChange}
-                        optionFilterProp="children" //??
-                        suffixIcon={<></>} //??
                         status={errors?.district ? 'error' : ''}
                         filterOption={(input, option) =>
                           removeAccents(option?.label ?? '')
@@ -262,8 +258,6 @@ const CheckoutForm = ({ handleCheckout }) => {
                         showSearch
                         placeholder="Ward"
                         onChange={_onWardChange}
-                        optionFilterProp="children" //??
-                        suffixIcon={<></>} //??
                         status={errors?.ward ? 'error' : ''}
                         filterOption={(input, option) =>
                           removeAccents(option?.label ?? '')
@@ -289,10 +283,11 @@ const CheckoutForm = ({ handleCheckout }) => {
             required
           />
           <FormField
-            {...register('note')}
             placeholder="Notes about your order, e.g. special notes for delivery"
             label="Order notes (optional)"
-            renderField={({fieldProps}, ref) => <textarea className="form-control" cols={30} rows={4} {...fieldProps} ref={ref} />}
+            renderField={(fieldProps) => (
+              <textarea className="form-control" cols={30} rows={4} {...fieldProps} {...register('note')} />
+            )}
           />
         </div>
 
