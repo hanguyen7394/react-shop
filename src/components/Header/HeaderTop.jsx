@@ -4,10 +4,12 @@ import { MODAL_TYPES } from '../../constant/common';
 import { PATHS } from '../../constant/paths';
 import { useDispatch, useSelector } from 'react-redux';
 import { handleLogout, handleShowModal } from '../../reducers/authReducer';
+import { clearWishlist } from '../../reducers/wishlistReducer';
 
 const HeaderTop = () => {
   const dispatch = useDispatch();
   const { profile } = useSelector((state) => state.auth);
+  const { wishlist } = useSelector((state) => state.wishlist);
   const [showedDropdown, setShowedDropdown] = useState(false);
 
   const { firstName, lastName, email } = profile || {};
@@ -24,11 +26,12 @@ const HeaderTop = () => {
 
   const _onShowModal = (type) => {
     dispatch(handleShowModal(type));
-  }
+  };
 
   const _onLogout = () => {
+    dispatch(clearWishlist());
     dispatch(handleLogout());
-  }
+  };
 
   return (
     <div className="header-top">
@@ -65,7 +68,8 @@ const HeaderTop = () => {
                       </li>
                       <li>
                         <Link to={PATHS.DASHBOARD.WISHLIST}>
-                          Wishlist <span>(3)</span>
+                          Wishlist
+                          {!!wishlist?.length && <span>({wishlist?.length})</span>}
                         </Link>
                       </li>
                       <li>

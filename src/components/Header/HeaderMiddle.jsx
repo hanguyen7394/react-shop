@@ -5,7 +5,7 @@ import { PATHS } from '../../constant/paths';
 import classNames from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
 import { handleToggleNavbar } from '../../reducers/mainReducer';
-import HeaderCart from './HeaderCart';
+import HeaderCartDropdown from './HeaderCartDropdown';
 
 const HeaderMiddle = () => {
   const dispatch = useDispatch();
@@ -71,7 +71,7 @@ const HeaderMiddle = () => {
               </div>
             </form>
           </div>
-          <HeaderCart />
+          <HeaderCartDropdown />
         </div>
       </div>
     </div>

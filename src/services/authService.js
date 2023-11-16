@@ -18,6 +18,12 @@ const authService = {
   refreshToken(payload = {}) {
     return axiosInstance.put('/customer/refresh', payload);
   },
+  addToWishList(payload = {}) {
+    return axiosInstance.post('/customer/white-list', payload);
+  },
+  removeFromWishList(payload = {}) {
+    return axiosInstance.delete('/customer/white-list', payload);
+  }
 };
 
 export default authService;

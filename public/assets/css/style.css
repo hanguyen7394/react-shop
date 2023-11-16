@@ -1270,7 +1270,6 @@ blockquote.text-white cite span {
     font-weight: 400;
     color: #1a1a1a;
     text-align: center;
-    z-index: 11;
 }
 
 .search-toggle:hover,
@@ -10030,7 +10029,7 @@ button:focus {
 
 .product-image-gallery {
     display: flex;
-    flex-flow: row wrap;
+    flex-flow: column;
     margin-left: -0.5rem;
     margin-right: -0.5rem;
 }
@@ -10932,7 +10931,7 @@ button:focus {
     }
 
     .product-gallery-vertical .product-gallery-item {
-        flex: 0 0 100%;
+        flex: 0 0 auto;
         max-width: 100%;
         padding-left: 0;
         padding-right: 0;

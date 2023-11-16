@@ -29,30 +29,22 @@ const DashboardPage = () => {
               <aside className="col-md-4 col-lg-3">
                 <ul className="nav nav-dashboard flex-column mb-3 mb-md-0">
                   <li className="nav-item">
-                    <NavLink end to={PATHS.DASHBOARD.INDEX}
-                      className="nav-link"
-                    >
+                    <NavLink end to={PATHS.DASHBOARD.INDEX} className="nav-link">
                       Account Details
                     </NavLink>
                   </li>
                   <li className="nav-item">
-                    <NavLink to={PATHS.DASHBOARD.ORDER}
-                      className="nav-link"
-                    >
+                    <NavLink to={PATHS.DASHBOARD.ORDER} className="nav-link">
                       Orders
                     </NavLink>
                   </li>
                   <li className="nav-item">
-                    <NavLink to={PATHS.DASHBOARD.ADDRESS}
-                      className="nav-link"
-                    >
+                    <NavLink to={PATHS.DASHBOARD.ADDRESS} className="nav-link">
                       Adresses
                     </NavLink>
                   </li>
                   <li className="nav-item">
-                    <NavLink to={PATHS.DASHBOARD.WISHLIST}
-                      className="nav-link"
-                    >
+                    <NavLink to={PATHS.DASHBOARD.WISHLIST} className="nav-link">
                       Wishlist
                     </NavLink>
                   </li>

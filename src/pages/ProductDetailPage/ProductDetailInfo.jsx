@@ -21,7 +21,9 @@ const ProductDetailInfo = ({
   reviews,
   colorRef,
   quantityRef,
+  isAddedWishlist,
   handleAddToCart,
+  handleToggleWishlist,
 }) => {
   const path = window.location.href;
   let categories = category || [];
@@ -30,6 +32,11 @@ const ProductDetailInfo = ({
   const _onAddToCart = (e) => {
     e.preventDefault();
     handleAddToCart();
+  };
+
+  const _onToggleWishlist = (e) => {
+    e.preventDefault();
+    handleToggleWishlist();
   };
 
   return (
@@ -68,8 +75,20 @@ const ProductDetailInfo = ({
           <span>add to cart</span>
         </Link>
         <div className="details-action-wrapper">
-          <Link className="btn-product btn-wishlist" title="Wishlist">
-            <span>Add to Wishlist</span>
+          <Link
+            onClick={_onToggleWishlist}
+            className="btn-product btn-wishlist"
+            title="Wishlist"
+            style={{ color: isAddedWishlist ? '#ef837b' : '#fcb941' }}
+          >
+            <span
+              style={{
+                color: isAddedWishlist ? '#ef837b' : '#fcb941',
+                boxShadow: isAddedWishlist ? '0 1px 0 0 #ef837b' : '0 1px 0 0 #fcb941',
+              }}
+            >
+              {isAddedWishlist ? 'Remove from wishlist' : 'Add to Wishlist'}
+            </span>
           </Link>
         </div>
       </div>

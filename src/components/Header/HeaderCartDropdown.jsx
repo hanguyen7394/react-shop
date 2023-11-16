@@ -38,7 +38,7 @@ const CartDetailStyled = styled.div`
   gap: 10px;
 `;
 
-const HeaderCart = () => {
+const HeaderCartDropdown = () => {
   const dispatch = useDispatch();
   const { confirm } = Modal;
   const { cartInfo, cartLoading } = useSelector((state) => state.cart);
@@ -145,4 +145,4 @@ const HeaderCart = () => {
   );
 };
 
-export default HeaderCart;
+export default HeaderCartDropdown;

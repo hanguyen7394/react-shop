@@ -1,13 +1,20 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { PATHS } from '../../constant/paths';
 import { formatCurrency } from '../../utils/format';
 import { calcRateWidth, getSalePrice } from '../../utils/common';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { handleAddCartThunk } from '../../reducers/cartReducer';
+import { handleAddWishlistThunk, handleRemoveWishlistThunk } from '../../reducers/wishlistReducer';
 
 const ProductItem = ({ id, name, color, images, price, slug, rating, discount }) => {
   const dispatch = useDispatch();
+  const { wishlist } = useSelector((state) => state.wishlist);
+
+  const isAddedWishlist = useMemo(() => {
+    return wishlist.some((product) => product.id === id);
+  }, [wishlist, id]);
+
   const detailPath = `${PATHS.PRODUCT.INDEX}/${slug}`;
 
   const _onAddToCart = (e) => {
@@ -27,6 +34,20 @@ const ProductItem = ({ id, name, color, images, price, slug, rating, discount })
     }
   };
 
+  const _onToggleWishlist = (e) => {
+    e.preventDefault();
+
+    try {
+      if (isAddedWishlist) {
+        dispatch(handleRemoveWishlistThunk({ productId: id }));
+      } else {
+        dispatch(handleAddWishlistThunk({ productId: id }));
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div className="product product-2">
       <figure className="product-media">
@@ -39,9 +60,15 @@ const ProductItem = ({ id, name, color, images, price, slug, rating, discount })
           />
         </Link>
         <div className="product-action-vertical">
-          <a href="#" className="btn-product-icon btn-wishlist btn-expandable">
-            <span>add to wishlist</span>
-          </a>
+          <Link
+            onClick={_onToggleWishlist}
+            style={{ backgroundColor: isAddedWishlist ? '#ef837b' : '#fcb941' }}
+            className="btn-product-icon btn-wishlist btn-expandable"
+          >
+            <span style={{ backgroundColor: isAddedWishlist ? '#ef837b' : '#fcb941' }}>
+              {isAddedWishlist ? 'remove from wishlist' : 'add to wishlist'}
+            </span>
+          </Link>
         </div>
         <div className="product-action product-action-dark">
           <Link onClick={_onAddToCart} className="btn-product btn-cart" title="Add to cart">

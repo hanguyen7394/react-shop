@@ -3,6 +3,7 @@ import tokenMethod from '../utils/token';
 import authService from '../services/authService';
 import { message } from 'antd';
 import { handleGetCart } from './cartReducer';
+import { updateWishlist } from './wishlistReducer';
 
 const initialState = {
   showedModal: '',
@@ -114,6 +115,7 @@ export const handleGetProfile = createAsyncThunk('auth/handleGetProfile', async 
     try {
       const res = await authService.getProfile();
       if (res?.data?.data) {
+        dispatch(updateWishlist(res?.data?.data?.whiteList));
         return res?.data?.data;
       }
     } catch (error) {

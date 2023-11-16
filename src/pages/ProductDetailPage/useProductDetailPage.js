@@ -1,15 +1,17 @@
 import { useParams } from 'react-router-dom';
 import useMutation from '../../hooks/useMutation';
 import productService from '../../services/productService';
-import { useEffect, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import useDebounce from '../../hooks/useDebounce';
 import { message } from 'antd';
 import reviewService from '../../services/reviewService';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { handleAddCartThunk } from '../../reducers/cartReducer';
+import { handleAddWishlistThunk, handleRemoveWishlistThunk } from '../../reducers/wishlistReducer';
 
 const useProductDetailPage = () => {
   const dispatch = useDispatch();
+  const { wishlist } = useSelector((state) => state.wishlist);
 
   //Handle get detail data
   const { productSlug } = useParams();
@@ -29,6 +31,10 @@ const useProductDetailPage = () => {
   const detailDebounce = useDebounce(detailLoading, 300);
 
   const { id: productId, images, name: productName, description, shippingReturn, price, discount } = detailData || {};
+
+  const isAddedWishlist = useMemo(() => {
+    return wishlist.some((product) => product.id === productId);
+  }, [wishlist, productId]);
 
   useEffect(() => {
     !!productSlug && getProductBySlug(productSlug);
@@ -72,6 +78,18 @@ const useProductDetailPage = () => {
     }
   };
 
+  const handleToggleWishlist = () => {
+    try {
+      if (isAddedWishlist) {
+        dispatch(handleRemoveWishlistThunk({ productId })).unwrap();
+      } else {
+        dispatch(handleAddWishlistThunk({ productId })).unwrap();
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   //Props list
   const detailGalleryProps = {
     images,
@@ -82,7 +100,9 @@ const useProductDetailPage = () => {
     reviews: reviewData || [],
     colorRef,
     quantityRef,
+    isAddedWishlist,
     handleAddToCart,
+    handleToggleWishlist,
   };
 
   const detailTabProps = {
@@ -93,6 +113,7 @@ const useProductDetailPage = () => {
 
   return {
     productName,
+    detailDebounce,
     detailGalleryProps,
     detailInfoProps,
     detailTabProps,
