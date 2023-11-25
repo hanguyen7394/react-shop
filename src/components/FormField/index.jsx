@@ -18,7 +18,7 @@ const FormField = ({ className='form-group', name, label, required, error, rende
           ref={ref}
         />
       )}
-      <p className="form-error" style={{ minHeight: '23px' }}>
+      <p className="form-error" style={{ minHeight: '10px' }}>
         {error || ''}
       </p>
     </div>

@@ -7566,7 +7566,7 @@ p {
 
 .form-group .form-control,
 .form-group .select-custom {
-    margin-bottom: 0;
+    margin-bottom: 1rem;
 }
 
 .form-control {
@@ -7579,7 +7579,7 @@ p {
     background-color: #fafafa;
     border: 1px solid #ebebeb;
     border-radius: 0;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     transition: all 0.3s;
     box-shadow: none;
 }
@@ -12807,6 +12807,7 @@ button:focus {
 .form-error{
     font-size: 1.2rem;
     color: red;
+    margin-bottom: 0 !important;
 }
 .contact-form .form-error{
     line-height: 0;
@@ -13297,14 +13298,6 @@ button:focus {
 
 .checkout label {
     margin-bottom: 0.2rem;
-}
-
-.checkout .form-control {
-    margin-bottom: 1.3rem;
-}
-
-.checkout .form-control+.form-control {
-    margin-top: 2rem;
 }
 
 .checkout .form-control:not(:focus) {
@@ -13989,18 +13982,6 @@ button:focus {
     }
 }
 
-.dashboard label {
-    margin-bottom: 0.2rem;
-}
-
-.dashboard .form-control {
-    margin-bottom: 1.3rem;
-}
-
-.dashboard .form-control+.form-control {
-    margin-top: 2rem;
-}
-
 .dashboard .form-control:not(:focus) {
     background-color: #f9f9f9;
 }
@@ -14008,7 +13989,6 @@ button:focus {
 .dashboard .tab-pane {
     padding: 0;
     border: none;
-    line-height: 2.15;
     padding-bottom: 2rem;
 }
 

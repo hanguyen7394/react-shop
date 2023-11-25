@@ -277,6 +277,7 @@ const CheckoutForm = ({ handleCheckout }) => {
             {...register('street', {
               required: MESSAGE.required,
             })}
+            className=''
             error={errors?.street?.message || ''}
             placeholder="House number and Street name"
             label="Street address"
@@ -285,6 +286,7 @@ const CheckoutForm = ({ handleCheckout }) => {
           <FormField
             placeholder="Notes about your order, e.g. special notes for delivery"
             label="Order notes (optional)"
+            className=''
             renderField={(fieldProps) => (
               <textarea className="form-control" cols={30} rows={4} {...fieldProps} {...register('note')} />
             )}
