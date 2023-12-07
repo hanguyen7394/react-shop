@@ -1,8 +1,21 @@
 import React from 'react';
-import { NavLink, Outlet } from 'react-router-dom';
+import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { PATHS } from '../../constant/paths';
+import { useDispatch } from 'react-redux';
+import { clearWishlist } from '../../reducers/wishlistReducer';
+import { handleLogout } from '../../reducers/authReducer';
+import Breadcrumb from '../../components/Breadcrumb';
 
 const DashboardPage = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const _onLogout = () => {
+    dispatch(clearWishlist());
+    dispatch(handleLogout());
+    navigate(PATHS.HOME);
+  };
+
   return (
     <main className="main">
       <div className="page-header text-center" style={{ backgroundImage: 'url("/assets/images/page-header-bg.jpg")' }}>
@@ -10,18 +23,12 @@ const DashboardPage = () => {
           <h1 className="page-title">My Account</h1>
         </div>
       </div>
-      <nav aria-label="breadcrumb" className="breadcrumb-nav mb-3">
-        <div className="container">
-          <ol className="breadcrumb">
-            <li className="breadcrumb-item">
-              <a href="index.html">Home</a>
-            </li>
-            <li className="breadcrumb-item active" aria-current="page">
-              My Account
-            </li>
-          </ol>
-        </div>
-      </nav>
+      <Breadcrumb>
+        <Breadcrumb.Item>
+          <Link to={PATHS.HOME}>Home</Link>
+        </Breadcrumb.Item>
+        <Breadcrumb.Item isActive>My Account</Breadcrumb.Item>
+      </Breadcrumb>
       <div className="page-content">
         <div className="dashboard">
           <div className="container">
@@ -49,9 +56,9 @@ const DashboardPage = () => {
                     </NavLink>
                   </li>
                   <li className="nav-item">
-                    <a className="nav-link" href="#">
+                    <Link className="nav-link" onClick={_onLogout}>
                       Sign Out
-                    </a>
+                    </Link>
                   </li>
                 </ul>
               </aside>

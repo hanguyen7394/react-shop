@@ -10,12 +10,12 @@ const useAddress = (defaultValue) => {
   const { data: provinceData } = useQuery(addressService.getProvinces);
 
   const { data: districtData } = useQuery(
-    () => selectedProvince && addressService.getDistrictByProvince(selectedProvince),
+    () => selectedProvince && addressService.getDistrictsByProvince(selectedProvince),
     [selectedProvince]
   );
 
   const { data: wardData } = useQuery(
-    () => selectedDistrict && addressService.getWardByDistrict(selectedDistrict),
+    () => selectedDistrict && addressService.getWardsByDistrict(selectedDistrict),
     [selectedDistrict]
   );
 

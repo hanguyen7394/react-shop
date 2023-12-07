@@ -1,20 +1,17 @@
 import React from 'react';
+import { PATHS } from '../../constant/paths';
+import Breadcrumb from '../../components/Breadcrumb';
+import { Link } from 'react-router-dom';
 
 const AboutPage = () => {
   return (
     <main className="main">
-      <nav aria-label="breadcrumb" className="breadcrumb-nav border-0 mb-0">
-        <div className="container">
-          <ol className="breadcrumb">
-            <li className="breadcrumb-item">
-              <a href="index.html">Home</a>
-            </li>
-            <li className="breadcrumb-item active" aria-current="page">
-              About us
-            </li>
-          </ol>
-        </div>
-      </nav>
+      <Breadcrumb>
+        <Breadcrumb.Item>
+          <Link to={PATHS.HOME}>Home</Link>
+        </Breadcrumb.Item>
+        <Breadcrumb.Item isActive>About us</Breadcrumb.Item>
+      </Breadcrumb>
       <div className="container">
         <div
           className="page-header page-header-big text-center"
@@ -31,19 +28,17 @@ const AboutPage = () => {
             <div className="col-lg-6 mb-3 mb-lg-0">
               <h2 className="title">Our Vision</h2>
               <p>
-                {'{'}' '{'}'}
                 Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus hendrerit. Pellentesque aliquet nibh
                 nec urna. In nisi neque, aliquet vel, dapibus id, mattis vel, nisi. Sed pretium, ligula sollicitudin
-                laoreet viverra, tortor libero sodales leo, eget blandit nunc tortor eu nibh.{'{'}' '{'}'}
+                laoreet viverra, tortor libero sodales leo, eget blandit nunc tortor eu nibh.
               </p>
             </div>
             <div className="col-lg-6">
               <h2 className="title">Our Mission</h2>
               <p>
-                {'{'}' '{'}'}
                 Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero eu augue. Morbi
                 purus libero, faucibus adipiscing, commodo quis, gravida id, est. Sed lectus. <br /> Praesent elementum
-                hendrerit tortor. Sed semper lorem at felis.{'{'}' '{'}'}
+                hendrerit tortor. Sed semper lorem at felis.
               </p>
             </div>
           </div>
@@ -55,15 +50,12 @@ const AboutPage = () => {
               <div className="col-lg-5 mb-3 mb-lg-0">
                 <h2 className="title">Who We Are</h2>
                 <p className="lead text-primary mb-3">
-                  {'{'}' '{'}'}
                   Pellentesque odio nisi, euismod pharetra a ultricies <br /> in diam. Sed arcu. Cras consequat{'{'}' '
                   {'}'}
                 </p>
                 <p className="mb-2">
-                  {'{'}' '{'}'}
                   Sed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget blandit nunc tortor
                   eu nibh. Suspendisse potenti. Sed egestas, ante et vulputate volutpat, uctus metus libero eu augue.
-                  {'{'}' '{'}'}
                 </p>
               </div>
               <div className="col-lg-6 offset-lg-1">

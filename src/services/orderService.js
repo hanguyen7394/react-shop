@@ -7,6 +7,9 @@ const orderService = {
   checkout(payload = {}) {
     return axiosInstance.post('/orders', payload);
   },
+  getOrders(query = '') {
+    return axiosInstance.get(`/orders/me${query}`);
+  }
 };
 
 export default orderService;

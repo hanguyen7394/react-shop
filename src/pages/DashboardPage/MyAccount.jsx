@@ -11,8 +11,7 @@ import useDashboardPage from './useDashboardPage';
 
 const MyAccount = () => {
   const { accountProps } = useDashboardPage();
-  const { handleUpdateProfile } = accountProps || {};
-  const { profile } = useSelector((state) => state.auth);
+  const { profile, handleUpdateProfile } = accountProps || {};
   const { firstName, lastName, phone, email, province, district, ward, street, birthday } = profile || {};
   const fullName = lastName ? firstName + ' ' + lastName : firstName;
 
